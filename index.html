@@ -268,9 +268,10 @@
             position: relative;
             backdrop-filter: blur(15px);
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             min-height: 120px;
+            gap: 20px;
         }
 
         .content-card:hover {
@@ -282,6 +283,7 @@
 
         .content-card-content {
             flex: 1;
+            padding-right: 20px;
         }
 
         .content-card h3 {
@@ -297,6 +299,15 @@
             margin: 0;
         }
 
+        .content-card-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 140px;
+        }
+
         .content-card-icon {
             display: flex;
             align-items: center;
@@ -306,7 +317,6 @@
             background: rgba(10, 132, 255, 0.2);
             border: 2px solid rgba(10, 132, 255, 0.4);
             border-radius: 50%;
-            margin-left: 20px;
             font-size: 1.5rem;
             transition: all 0.3s ease;
         }
@@ -317,30 +327,24 @@
             transform: rotate(5deg) scale(1.1);
         }
 
-        .content-card::after {
-            content: "Click to learn more →";
-            position: absolute;
-            top: 50%;
-            right: 80px;
-            transform: translateY(-50%);
-            font-size: 1.1rem;
+        .content-card-cta {
+            font-size: 1rem;
             color: #ffffff;
-            opacity: 0.9;
-            transition: all 0.3s ease;
             font-weight: 700;
             background: rgba(10, 132, 255, 0.3);
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 20px;
             border: 2px solid rgba(10, 132, 255, 0.6);
             text-shadow: 0 0 10px rgba(10, 132, 255, 0.5);
+            transition: all 0.3s ease;
+            text-align: center;
+            white-space: nowrap;
         }
 
-        .content-card:hover::after {
-            opacity: 1;
-            right: 75px;
+        .content-card:hover .content-card-cta {
             background: rgba(10, 132, 255, 0.5);
             border-color: rgba(10, 132, 255, 0.8);
-            transform: translateY(-50%) scale(1.05);
+            transform: scale(1.05);
             text-shadow: 0 0 15px rgba(10, 132, 255, 0.8);
         }
 
@@ -693,6 +697,29 @@
             .modal p, .modal li {
                 font-size: 1rem;
             }
+
+            /* Mobile responsiveness for content cards */
+            .content-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .content-card-content {
+                padding-right: 0;
+            }
+            
+            .content-card-right {
+                flex-direction: row;
+                min-width: auto;
+                justify-content: center;
+            }
+            
+            .content-card-cta {
+                font-size: 0.9rem;
+                padding: 5px 10px;
+            }
         }
     </style>
 </head>
@@ -757,28 +784,40 @@
                             <h3>🧠 Knowledge as Currency</h3>
                             <p>In the AI age, your unique experience and insights become the most valuable economic asset—not just information, but applied wisdom.</p>
                         </div>
-                        <div class="content-card-icon">💡</div>
+                        <div class="content-card-right">
+                            <div class="content-card-icon">💡</div>
+                            <div class="content-card-cta">Click to learn more →</div>
+                        </div>
                     </div>
                     <div class="content-card" data-modal="micro-specialist">
                         <div class="content-card-content">
                             <h3>🎯 Micro-Specialist Network</h3>
                             <p>Connect hyper-niche experts with specific challenges. When AI handles execution, human specialization becomes the differentiator.</p>
                         </div>
-                        <div class="content-card-icon">🔗</div>
+                        <div class="content-card-right">
+                            <div class="content-card-icon">🔗</div>
+                            <div class="content-card-cta">Click to learn more →</div>
+                        </div>
                     </div>
                     <div class="content-card" data-modal="gig-economy">
                         <div class="content-card-content">
                             <h3>⚡ Knowledge Gig Economy</h3>
                             <p>Portfolio careers built on expertise packages. Sell your knowledge project-by-project, not hour-by-hour.</p>
                         </div>
-                        <div class="content-card-icon">💼</div>
+                        <div class="content-card-right">
+                            <div class="content-card-icon">💼</div>
+                            <div class="content-card-cta">Click to learn more →</div>
+                        </div>
                     </div>
                     <div class="content-card" data-modal="authenticated-experience">
                         <div class="content-card-content">
                             <h3>🔐 Authenticated Experience</h3>
                             <p>Verify and document the human reasoning behind solutions. In a world of AI content, human logic becomes premium.</p>
                         </div>
-                        <div class="content-card-icon">✅</div>
+                        <div class="content-card-right">
+                            <div class="content-card-icon">✅</div>
+                            <div class="content-card-cta">Click to learn more →</div>
+                        </div>
                     </div>
                 </div>
             </section>

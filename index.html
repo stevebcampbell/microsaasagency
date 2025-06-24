@@ -815,7 +815,7 @@
             <div class="hero-right">
                 <div class="signup-compact">
                     <h3>Which Resonates With You?</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-secondary);">Help us understand the Knowledge Gig Economy demand:</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-secondary);">Help us understand the Knowledge Gig Economy demand: <strong style="color: var(--text-primary);">(Select all that apply)</strong></p>
                     <div class="signup-buttons">
                         <button type="button" class="signup-btn resonance-btn" data-type="challenger">
                             <span class="btn-icon">🎯</span>
@@ -831,8 +831,8 @@
                         </button>
                     </div>
                     <div id="resonance-feedback" style="display: none; margin-top: 20px; padding: 15px; background: rgba(16, 255, 16, 0.1); border: 1px solid rgba(16, 255, 16, 0.3); border-radius: 8px; text-align: center;">
-                        <p style="color: #10ff10; margin: 0;">✅ <strong>Saved to your browser storage!</strong></p>
-                        <p style="color: var(--text-secondary); margin: 8px 0 0 0; font-size: 0.9rem;">When you register interest, this will be part of the email subject line →</p>
+                        <p style="color: #10ff10; margin: 0;" id="feedback-message">✅ <strong>Selections saved to browser storage!</strong></p>
+                        <p style="color: var(--text-secondary); margin: 8px 0 0 0; font-size: 0.9rem;">When you register interest, these will be part of the email subject line →</p>
                     </div>
                 </div>
             </div>
@@ -1024,9 +1024,10 @@
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
 
-            // Resonance button functionality
+            // Resonance button functionality - Multi-select
             const resonanceButtons = document.querySelectorAll('.resonance-btn');
             const resonanceFeedback = document.getElementById('resonance-feedback');
+            const feedbackMessage = document.getElementById('feedback-message');
             const formResonanceCheckboxes = document.querySelectorAll('input[name="resonance_types"]');
             const formSelectedResonanceField = document.getElementById('form_selected_resonance');
             const formSubjectField = document.querySelector('input[name="_subject"]');
@@ -1038,6 +1039,12 @@
                 'expert': 'I Have Niche Expertise', 
                 'seeker': 'I Want Human-Verified Solutions'
             };
+
+            function getSelectedTopButtons() {
+                return Array.from(resonanceButtons)
+                    .filter(btn => btn.classList.contains('selected'))
+                    .map(btn => btn.getAttribute('data-type'));
+            }
 
             function updateFormCheckboxes() {
                 const checkedValues = Array.from(formResonanceCheckboxes)
@@ -1067,59 +1074,109 @@
                 }
             }
 
-            function syncTopButtonToForm(resonanceType) {
-                const checkboxValue = resonanceMapping[resonanceType];
-                const checkbox = Array.from(formResonanceCheckboxes).find(cb => cb.value === checkboxValue);
-                if (checkbox && !checkbox.checked) {
-                    checkbox.checked = true;
-                    updateFormCheckboxes();
+            function syncFormToTopButtons() {
+                const selectedTypes = getSelectedTopButtons();
+                
+                // Clear all form checkboxes first
+                formResonanceCheckboxes.forEach(cb => cb.checked = false);
+                
+                // Check boxes that match selected top buttons
+                selectedTypes.forEach(type => {
+                    const checkboxValue = resonanceMapping[type];
+                    const checkbox = Array.from(formResonanceCheckboxes).find(cb => cb.value === checkboxValue);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+                
+                updateFormCheckboxes();
+            }
+
+            function updateTopButtonFeedback() {
+                const selectedTypes = getSelectedTopButtons();
+                const selectedLabels = selectedTypes.map(type => resonanceMapping[type]);
+                
+                if (selectedTypes.length > 0) {
+                    resonanceFeedback.style.display = 'block';
+                    feedbackMessage.innerHTML = `✅ <strong>Selected: ${selectedLabels.join(', ')}</strong>`;
+                    
+                    // Save to session storage
+                    sessionStorage.setItem('selectedResonanceTypes', JSON.stringify(selectedTypes));
+                } else {
+                    resonanceFeedback.style.display = 'none';
+                    sessionStorage.removeItem('selectedResonanceTypes');
                 }
             }
 
-            // Handle top resonance buttons
+            // Handle top resonance buttons - Multi-select
             resonanceButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const resonanceType = this.getAttribute('data-type');
                     
-                    // Save to session storage
-                    sessionStorage.setItem('resonanceType', resonanceType);
+                    // Toggle selection instead of single-select
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                    } else {
+                        this.classList.add('selected');
+                    }
                     
-                    // Sync with form checkboxes
-                    syncTopButtonToForm(resonanceType);
+                    // Update feedback and sync with form
+                    updateTopButtonFeedback();
+                    syncFormToTopButtons();
                     
-                    // Visual feedback
-                    resonanceButtons.forEach(btn => btn.classList.remove('selected'));
-                    this.classList.add('selected');
-                    
-                    // Show success message
-                    resonanceFeedback.style.display = 'block';
-                    
-                    // Smooth scroll to forms section after a brief delay
-                    setTimeout(() => {
-                        const joinSection = document.querySelector('.join-early');
-                        if (joinSection) {
-                            joinSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }, 1500);
+                    // Scroll to form if any selection is made
+                    const selectedCount = getSelectedTopButtons().length;
+                    if (selectedCount > 0) {
+                        setTimeout(() => {
+                            const joinSection = document.querySelector('.join-early');
+                            if (joinSection) {
+                                joinSection.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }, 1500);
+                    }
                 });
             });
 
-            // Handle form checkbox changes
+            // Handle form checkbox changes - sync back to top buttons
             formResonanceCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateFormCheckboxes);
+                checkbox.addEventListener('change', function() {
+                    updateFormCheckboxes();
+                    
+                    // Find corresponding top button and sync
+                    const buttonType = Object.keys(resonanceMapping).find(key => 
+                        resonanceMapping[key] === this.value
+                    );
+                    
+                    if (buttonType) {
+                        const button = document.querySelector(`[data-type="${buttonType}"]`);
+                        if (button) {
+                            if (this.checked) {
+                                button.classList.add('selected');
+                            } else {
+                                button.classList.remove('selected');
+                            }
+                        }
+                    }
+                    
+                    updateTopButtonFeedback();
+                });
             });
 
-            // Load saved resonance on page load
-            const savedResonance = sessionStorage.getItem('resonanceType');
-            if (savedResonance) {
-                // Sync with form
-                syncTopButtonToForm(savedResonance);
-                
-                // Highlight the selected button
-                const selectedButton = document.querySelector(`[data-type="${savedResonance}"]`);
-                if (selectedButton) {
-                    selectedButton.classList.add('selected');
-                    resonanceFeedback.style.display = 'block';
+            // Load saved resonance selections on page load
+            const savedResonanceTypes = sessionStorage.getItem('selectedResonanceTypes');
+            if (savedResonanceTypes) {
+                try {
+                    const selectedTypes = JSON.parse(savedResonanceTypes);
+                    selectedTypes.forEach(type => {
+                        const button = document.querySelector(`[data-type="${type}"]`);
+                        if (button) {
+                            button.classList.add('selected');
+                        }
+                    });
+                    updateTopButtonFeedback();
+                    syncFormToTopButtons();
+                } catch (e) {
+                    console.error('Error loading saved resonance types:', e);
                 }
             }
 

@@ -550,18 +550,27 @@
                     <h3>Which Resonates With You?</h3>
                     <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-secondary);">Help us understand the Knowledge Gig Economy demand:</p>
                     <div class="signup-buttons">
-                        <button class="signup-btn" data-type="challenger">
-                            <span class="btn-icon">🎯</span>
-                            <span class="btn-text">I Have Complex Challenges</span>
-                        </button>
-                        <button class="signup-btn" data-type="expert">
-                            <span class="btn-icon">🧠</span>
-                            <span class="btn-text">I Have Niche Expertise</span>
-                        </button>
-                        <button class="signup-btn" data-type="seeker">
-                            <span class="btn-icon">💡</span>
-                            <span class="btn-text">I Want Human-Verified Solutions</span>
-                        </button>
+                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display: contents;">
+                            <button type="submit" class="signup-btn" name="user_type" value="challenger">
+                                <span class="btn-icon">🎯</span>
+                                <span class="btn-text">I Have Complex Challenges</span>
+                            </button>
+                            <input type="hidden" name="_subject" value="Complex Challenges Interest - Knowledge Gig Platform">
+                        </form>
+                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display: contents;">
+                            <button type="submit" class="signup-btn" name="user_type" value="expert">
+                                <span class="btn-icon">🧠</span>
+                                <span class="btn-text">I Have Niche Expertise</span>
+                            </button>
+                            <input type="hidden" name="_subject" value="Niche Expertise Interest - Knowledge Gig Platform">
+                        </form>
+                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display: contents;">
+                            <button type="submit" class="signup-btn" name="user_type" value="seeker">
+                                <span class="btn-icon">💡</span>
+                                <span class="btn-text">I Want Human-Verified Solutions</span>
+                            </button>
+                            <input type="hidden" name="_subject" value="Solution Seeker Interest - Knowledge Gig Platform">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -677,8 +686,10 @@
                     <div class="join-right">
                         <div class="email-signup-form">
                             <h3>Join the Vision</h3>
-                            <form class="compact-email-form" data-type="early-access">
-                                <input type="email" placeholder="Enter your email" required>
+                            <form class="compact-email-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                                <input type="email" name="email" placeholder="Enter your email" required>
+                                <input type="hidden" name="_subject" value="New Knowledge Gig Economy Platform Interest">
+                                <input type="hidden" name="_next" value="https://stevebcampbell.github.io/microsaasagency/?thanks=1">
                                 <button type="submit" class="submit-btn">Count Me In</button>
                             </form>
                             <div class="contact-link">
@@ -694,26 +705,16 @@
     <script>
         // Simplified functionality for single page
         document.addEventListener('DOMContentLoaded', function() {
-            const signupBtns = document.querySelectorAll('.signup-btn');
             const modal = document.getElementById('modal');
             const modalClose = document.querySelector('.modal-close');
 
-            // Handle signup button clicks
-            signupBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // For now, just show an alert - replace with actual email collection
-                    const type = this.getAttribute('data-type');
-                    alert(`Thanks for your interest! We'll contact you soon about ${type} opportunities.`);
-                });
-            });
-
-            // Handle email form submission
-            document.querySelector('.compact-email-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = this.querySelector('input[type="email"]').value;
-                alert(`Thanks for joining! We'll send updates to ${email}`);
-                this.reset();
-            });
+            // Check for thank you parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('thanks') === '1') {
+                alert('Thanks for joining! We\'ll be in touch soon.');
+                // Remove the parameter from URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
 
             // Modal data
             const modalData = {
@@ -866,5 +867,26 @@
             </div>
         </div>
     </div>
+
+    <!--
+    EMAIL COLLECTION SETUP INSTRUCTIONS:
+    
+    Currently using Formspree (formspree.io) for email collection.
+    To activate:
+    
+    1. Go to https://formspree.io
+    2. Sign up for free account
+    3. Create a new form
+    4. Replace "YOUR_FORM_ID" with your actual Formspree form ID
+    5. Deploy changes
+    
+    Alternative options:
+    - EmailJS (emailjs.com) - Client-side email sending
+    - Netlify Forms (if hosting on Netlify)
+    - Google Apps Script + Google Sheets
+    - ConvertKit, Mailchimp, etc.
+    
+    Current status: Forms are set up but need Formspree account to activate
+    -->
 </body>
 </html>

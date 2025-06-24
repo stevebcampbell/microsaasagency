@@ -15,9 +15,9 @@
             --glass-blue: #0a84ff;
             --glass-purple: #5e5ce6;
             --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.9);
-            --card-bg: rgba(255, 255, 255, 0.12);
-            --card-border: rgba(255, 255, 255, 0.25);
+            --text-secondary: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.2);
+            --card-border: rgba(255, 255, 255, 0.35);
         }
 
         * {
@@ -275,7 +275,13 @@
         .auth-intro h2 {
             font-size: 2rem;
             margin-bottom: 10px;
-            color: var(--glass-blue);
+            color: var(--text-primary);
+        }
+
+        .auth-intro p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
         .auth-grid {
@@ -285,17 +291,19 @@
         }
 
         .auth-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 15px;
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
         }
 
         .auth-card:hover {
             transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .auth-icon {
@@ -306,7 +314,15 @@
 
         .auth-card h4 {
             margin-bottom: 10px;
-            color: var(--glass-blue);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .auth-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         /* Marketplace */
@@ -318,7 +334,13 @@
         .marketplace-intro h2 {
             font-size: 2rem;
             margin-bottom: 10px;
-            color: var(--glass-blue);
+            color: var(--text-primary);
+        }
+
+        .marketplace-intro p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
         .marketplace-grid {
@@ -328,17 +350,19 @@
         }
 
         .marketplace-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 15px;
             padding: 25px;
             text-align: center;
             transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
         }
 
         .marketplace-card:hover {
             transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .market-icon {
@@ -349,8 +373,14 @@
 
         .marketplace-card h4 {
             margin-bottom: 10px;
-            color: var(--glass-blue);
+            color: var(--text-primary);
             font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .marketplace-card p {
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
 
         /* Join Section */

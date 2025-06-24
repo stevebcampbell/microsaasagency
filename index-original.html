@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroSaaS Development Agency - Global Software Solutions</title>
+    <meta name="description" content="Premium MicroSaaS development agency connecting businesses with world-class fractional development talent. We validate market opportunities and build profitable software solutions at scale.">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-primary: #ffffff;
+            --glass-secondary: #fafbfc;
+            --glass-accent: #f5f7fa;
+            --glass-highlight: #ffffff;
+            --glass-blue: #0a84ff;
+            --glass-purple: #5e5ce6;
+            --glass-green: #32d74b;
+            --glass-orange: #ff9f0a;
+            --void-bg: linear-gradient(135deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            --glass-dark: #1d1d1f;
+            --glass-medium: #86868b;
+            --glass-light: #ffffff;
+            --glass-text: #1d1d1f;
+            --glass-text-secondary: rgba(29, 29, 31, 0.68);
+            --liquid-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 255, 0.8) 100%);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--void-bg);
+            color: var(--glass-text);
+            cursor: default;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* MAIN CONTAINER */
+        .fullscreen-container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* DYNAMIC CONTENT LAYERS */
+        .content-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateZ(0);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+        }
+
+        .content-layer.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .content-layer.slide-left {
+            transform: translateX(-100%);
+        }
+
+        .content-layer.slide-right {
+            transform: translateX(100%);
+        }
+
+        .content-layer.fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        /* Liquid Glass Background System */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(10, 132, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(94, 92, 230, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(50, 215, 75, 0.06) 0%, transparent 40%),
+                linear-gradient(180deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            animation: liquidFlow 30s ease-in-out infinite alternate;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(10, 132, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(10, 132, 255, 0.02) 1px, transparent 1px),
+                radial-gradient(circle at 25% 25%, rgba(94, 92, 230, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 159, 10, 0.1) 0%, transparent 50%);
+            background-size: 120px 120px, 120px 120px, 800px 800px, 600px 600px;
+            animation: gridFloat 60s linear infinite, holoShift 15s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes liquidFlow {
+            0% { filter: blur(0px) brightness(1.1); }
+            100% { filter: blur(2px) brightness(1.25); }
+        }
+
+        @keyframes gridFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+
+        @keyframes holoShift {
+            0% { 
+                filter: hue-rotate(0deg) brightness(1.1);
+                transform: scale(1);
+            }
+            50% { 
+                filter: hue-rotate(45deg) brightness(1.2);
+                transform: scale(1.02);
+            }
+            100% { 
+                filter: hue-rotate(90deg) brightness(1.15);
+                transform: scale(1.01);
+            }
+        }
+
+        /* Liquid Glass Particle System */
+        .neural-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(10, 132, 255, 0.8) 0%, rgba(94, 92, 230, 0.6) 50%, rgba(50, 215, 75, 0.4) 100%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: glassFloat 25s infinite linear, particlePulse 3s ease-in-out infinite alternate;
+            backdrop-filter: blur(3px);
+            box-shadow: 
+                0 0 10px rgba(10, 132, 255, 0.6),
+                0 0 20px rgba(94, 92, 230, 0.4),
+                0 0 30px rgba(50, 215, 75, 0.2);
+        }
+
+        @keyframes glassFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particlePulse {
+            0% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            100% { 
+                transform: scale(1.5);
+                filter: brightness(1.5);
+            }
+        }
+
+        /* Navigation */
+        .neural-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--liquid-gradient);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 20px 0;
+            animation: navPulse 8s ease-in-out infinite alternate;
+        }
+
+        .neural-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(10, 132, 255, 0.1), 
+                transparent, 
+                rgba(94, 92, 230, 0.1), 
+                transparent);
+            animation: navSweep 6s ease-in-out infinite;
+        }
+
+        @keyframes navPulse {
+            0% { 
+                box-shadow: 0 0 20px rgba(10, 132, 255, 0.2);
+                border-bottom-color: rgba(10, 132, 255, 0.3);
+            }
+            100% { 
+                box-shadow: 0 0 40px rgba(94, 92, 230, 0.4);
+                border-bottom-color: rgba(94, 92, 230, 0.5);
+            }
+        }
+
+        @keyframes navSweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple), var(--glass-green), var(--glass-orange));
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            animation: logoRainbow 8s ease-in-out infinite, logoFloat 4s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, rgba(10, 132, 255, 0.3), rgba(94, 92, 230, 0.3), rgba(50, 215, 75, 0.3));
+            border-radius: 15px;
+            filter: blur(10px);
+            z-index: -1;
+            opacity: 0;
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoRainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-3px) rotate(1deg); }
+        }
+
+        @keyframes logoGlow {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--glass-text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(10, 132, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--glass-text);
+            background: rgba(10, 132, 255, 0.15);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 5px 20px rgba(10, 132, 255, 0.3);
+        }
+
+        /* VIEWPORT-FITTED HERO SECTION */
+        .hero-section {
+            height: 100vh;
+            width: 100vw;
+            display: grid;
+            grid-template-rows: auto 1fr auto auto;
+            grid-template-areas: 
+                "nav"
+                "content" 
+                "cta"
+                "features";
+            align-items: center;
+            text-align: center;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-nav {
+            grid-area: nav;
+            padding: 20px 40px;
+            z-index: 1000;
+        }
+
+        .hero-content {
+            grid-area: content;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-height: 40vh;
+        }
+
+        .hero-cta {
+            grid-area: cta;
+            padding: 20px 40px;
+        }
+
+        .hero-features {
+            grid-area: features;
+            padding: 20px 40px;
+            max-height: 25vh;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--glass-text) 0%, var(--glass-blue) 25%, var(--glass-purple) 50%, var(--glass-green) 75%, var(--glass-orange) 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: titleGlow 4s ease-in-out infinite alternate, titleShift 12s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+            position: relative;
+            line-height: 1.1;
+        }
+
+        .hero-title::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.5), rgba(94, 92, 230, 0.5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            z-index: -1;
+            animation: titleGhost 8s ease-in-out infinite;
+        }
+
+        @keyframes titleShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes titleGhost {
+            0%, 100% { 
+                transform: translate(0, 0);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translate(2px, -2px);
+                opacity: 0.1;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            max-width: 600px;
+            color: var(--glass-text-secondary);
+            line-height: 1.3;
+        }
+
+        .hero-description {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            line-height: 1.4;
+            opacity: 0.8;
+            margin-bottom: 0;
+            max-width: 700px;
+            color: var(--glass-text-secondary);
+        }
+
+        .hero-cta-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0;
+        }
+
+        /* SEXY BUTTON ANIMATIONS */
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            backdrop-filter: blur(20px) saturate(180%);
+            animation: buttonFloat 6s ease-in-out infinite alternate;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: buttonSweep 3s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.1), rgba(94, 92, 230, 0.1));
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0;
+            animation: buttonGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes buttonFloat {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-5px) scale(1.02); }
+        }
+
+        @keyframes buttonSweep {
+            0% { opacity: 0; transform: translateX(-100%) rotate(45deg); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes buttonGlow {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            background-size: 200% 200%;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(10, 132, 255, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            animation: buttonFloat 6s ease-in-out infinite alternate, primaryPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes primaryPulse {
+            0%, 100% { 
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 8px 32px rgba(10, 132, 255, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            }
+            50% { 
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 12px 48px rgba(10, 132, 255, 0.8),
+                    0 0 0 2px rgba(255, 255, 255, 0.3) inset,
+                    0 0 20px rgba(94, 92, 230, 0.6);
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(10, 132, 255, 0.8),
+                0 0 30px rgba(94, 92, 230, 0.6);
+        }
+
+        /* Value Proposition Grid */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* COMPACT FEATURES GRID */
+        .features-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-mini-card {
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px) saturate(180%);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px var(--glass-shadow);
+            animation: cardFloat 8s ease-in-out infinite alternate;
+            text-align: center;
+        }
+
+        .feature-mini-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(10, 132, 255, 0.2);
+            border-color: rgba(10, 132, 255, 0.3);
+        }
+
+        .feature-mini-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--glass-text);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-mini-desc {
+            font-size: 0.75rem;
+            color: var(--glass-text-secondary);
+            line-height: 1.3;
+        }
+
+        /* Liquid Glass Particle System */
+        .neural-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(10, 132, 255, 0.8) 0%, rgba(94, 92, 230, 0.6) 50%, rgba(50, 215, 75, 0.4) 100%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: glassFloat 25s infinite linear, particlePulse 3s ease-in-out infinite alternate;
+            backdrop-filter: blur(3px);
+            box-shadow: 
+                0 0 10px rgba(10, 132, 255, 0.6),
+                0 0 20px rgba(94, 92, 230, 0.4),
+                0 0 30px rgba(50, 215, 75, 0.2);
+        }
+
+        @keyframes glassFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes particlePulse {
+            0% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            100% { 
+                transform: scale(1.5);
+                filter: brightness(1.5);
+            }
+        }
+
+        /* Navigation */
+        .neural-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--liquid-gradient);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 20px 0;
+            animation: navPulse 8s ease-in-out infinite alternate;
+        }
+
+        .neural-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(10, 132, 255, 0.1), 
+                transparent, 
+                rgba(94, 92, 230, 0.1), 
+                transparent);
+            animation: navSweep 6s ease-in-out infinite;
+        }
+
+        @keyframes navPulse {
+            0% { 
+                box-shadow: 0 0 20px rgba(10, 132, 255, 0.2);
+                border-bottom-color: rgba(10, 132, 255, 0.3);
+            }
+            100% { 
+                box-shadow: 0 0 40px rgba(94, 92, 230, 0.4);
+                border-bottom-color: rgba(94, 92, 230, 0.5);
+            }
+        }
+
+        @keyframes navSweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple), var(--glass-green), var(--glass-orange));
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            animation: logoRainbow 8s ease-in-out infinite, logoFloat 4s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, rgba(10, 132, 255, 0.3), rgba(94, 92, 230, 0.3), rgba(50, 215, 75, 0.3));
+            border-radius: 15px;
+            filter: blur(10px);
+            z-index: -1;
+            opacity: 0;
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoRainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes logoFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-3px) rotate(1deg); }
+        }
+
+        @keyframes logoGlow {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--glass-text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(10, 132, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--glass-text);
+            background: rgba(10, 132, 255, 0.15);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 5px 20px rgba(10, 132, 255, 0.3);
+        }
+
+        /* VIEWPORT-FITTED HERO SECTION */
+        .hero-section {
+            height: 100vh;
+            width: 100vw;
+            display: grid;
+            grid-template-rows: auto 1fr auto auto;
+            grid-template-areas: 
+                "nav"
+                "content" 
+                "cta"
+                "features";
+            align-items: center;
+            text-align: center;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-nav {
+            grid-area: nav;
+            padding: 20px 40px;
+            z-index: 1000;
+        }
+
+        .hero-content {
+            grid-area: content;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-height: 40vh;
+        }
+
+        .hero-cta {
+            grid-area: cta;
+            padding: 20px 40px;
+        }
+
+        .hero-features {
+            grid-area: features;
+            padding: 20px 40px;
+            max-height: 25vh;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--glass-text) 0%, var(--glass-blue) 25%, var(--glass-purple) 50%, var(--glass-green) 75%, var(--glass-orange) 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: titleGlow 4s ease-in-out infinite alternate, titleShift 12s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+            position: relative;
+            line-height: 1.1;
+        }
+
+        .hero-title::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.5), rgba(94, 92, 230, 0.5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            z-index: -1;
+            animation: titleGhost 8s ease-in-out infinite;
+        }
+
+        @keyframes titleShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes titleGhost {
+            0%, 100% { 
+                transform: translate(0, 0);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translate(2px, -2px);
+                opacity: 0.1;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 10px;
+            max-width: 600px;
+            color: var(--glass-text-secondary);
+            line-height: 1.3;
+        }
+
+        .hero-description {
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            line-height: 1.4;
+            opacity: 0.8;
+            margin-bottom: 0;
+            max-width: 700px;
+            color: var(--glass-text-secondary);
+        }
+
+        .hero-cta-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0;
+        }
+
+        /* SEXY BUTTON ANIMATIONS */
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            backdrop-filter: blur(20px) saturate(180%);
+            animation: buttonFloat 6s ease-in-out infinite alternate;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: buttonSweep 3s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.1), rgba(94, 92, 230, 0.1));
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0;
+            animation: buttonGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes buttonFloat {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-5px) scale(1.02); }
+        }
+
+        @keyframes buttonSweep {
+            0% { opacity: 0; transform: translateX(-100%) rotate(45deg); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes buttonGlow {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            background-size: 200% 200%;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 8px 32px rgba(10, 132, 255, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            animation: buttonFloat 6s ease-in-out infinite alternate, primaryPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes primaryPulse {
+            0%, 100% { 
+                background-position: 0% 50%;
+                box-shadow: 
+                    0 8px 32px rgba(10, 132, 255, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            }
+            50% { 
+                background-position: 100% 50%;
+                box-shadow: 
+                    0 12px 48px rgba(10, 132, 255, 0.8),
+                    0 0 0 2px rgba(255, 255, 255, 0.3) inset,
+                    0 0 20px rgba(94, 92, 230, 0.6);
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(10, 132, 255, 0.8),
+                0 0 30px rgba(94, 92, 230, 0.6);
+        }
+
+        /* Value Proposition Grid */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* COMPACT FEATURES GRID */
+        .features-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-mini-card {
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px) saturate(180%);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px var(--glass-shadow);
+            animation: cardFloat 8s ease-in-out infinite alternate;
+            text-align: center;
+        }
+
+        .feature-mini-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(10, 132, 255, 0.2);
+            border-color: rgba(10, 132, 255, 0.3);
+        }
+
+        .feature-mini-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--glass-text);
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-mini-desc {
+            font-size: 0.75rem;
+            color: var(--glass-text-secondary);
+            line-height: 1.3;
+        }
+
+        /* QUICK REFERENCE MODAL */
+        .quick-ref-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .quick-ref-content {
+            background: var(--liquid-gradient);
+            border: 2px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 20px 80px var(--glass-shadow);
+        }
+
+        .quick-ref-content h3 {
+            color: var(--glass-text);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quick-links a {
+            color: var(--glass-text);
+            text-decoration: none;
+            padding: 15px 20px;
+            background: rgba(10, 132, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(10, 132, 255, 0.2);
+        }
+
+        .quick-links a:hover {
+            background: rgba(10, 132, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(10, 132, 255, 0.3);
+        }
+
+        /* SECTIONS */
+        .platform-section {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--glass-text), var(--glass-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: var(--glass-text-secondary);
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.6;
+        }
+
+        .platform-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transition: all 0.4s ease;
+            text-align: left;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(10, 132, 255, 0.2);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--glass-text);
+        }
+
+        .access-section {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+            background: rgba(248, 250, 255, 0.3);
+        }
+
+        .access-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .access-card {
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 6px 24px var(--glass-shadow);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .access-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(10, 132, 255, 0.15);
+        }
+
+        .access-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--glass-text);
+        }
+
+        .access-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--glass-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .access-link:hover {
+            color: var(--glass-purple);
+        }
+
+        /* QUICK REFERENCE MODAL STYLES */
+        .quick-ref-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quick-ref-content {
+            background: var(--liquid-gradient);
+            border: 2px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 20px 80px var(--glass-shadow);
+        }
+
+        .quick-ref-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--glass-text-secondary);
+            cursor: pointer;
+        }
+
+        .quick-ref-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--glass-text);
+        }
+
+        .quick-ref-section {
+            margin-bottom: 25px;
+        }
+
+        .quick-ref-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--glass-blue);
+        }
+
+        .quick-ref-highlight {
+            color: var(--glass-blue);
+            font-weight: 700;
+        }
+
+        /* FLOATING ELEMENTS */
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--glass-blue);
+            transform: scale(1.3);
+        }
+
+        .floating-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .fab {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--glass-blue);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(10, 132, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 48px rgba(10, 132, 255, 0.6);
+        }
+
+        /* FOOTER */
+        .neural-footer {
+            background: var(--liquid-gradient);
+            border-top: 1px solid var(--glass-border);
+            padding: 50px 0;
+            text-align: center;
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--glass-text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--glass-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle System -->
+    <div class="neural-particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="neural-nav">
+        <div class="nav-content">
+            <div class="logo">MicroSaaS Agency</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" onclick="switchView('services')">Services</a>
+                <a href="#" class="nav-link" onclick="switchView('portfolio')">Portfolio</a>
+                <a href="#" class="nav-link" onclick="switchView('team')">Team</a>
+                <a href="#" class="nav-link" onclick="switchView('contact')">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Single Screen Hero -->
+    <div class="fullscreen-container">
+        <section class="hero-section">
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <h1 class="hero-title">MicroSaaS Development Agency</h1>
+                <h2 class="hero-subtitle">Profitable Software Solutions at Scale</h2>
+                <p class="hero-description">
+                    We connect businesses with world-class fractional development talent to build, validate, and scale profitable MicroSaaS products. From market validation to full-stack development, we deliver results that matter.
+                </p>
+            </div>
+            
+            <!-- CTA Section -->
+            <div class="hero-cta">
+                <div class="hero-cta-container">
+                    <a href="#services" class="cta-button cta-primary">
+                        View Our Services
+                    </a>
+                    <a href="#portfolio" class="cta-button cta-secondary">
+                        See Case Studies
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Compact Features -->
+            <div class="hero-features">
+                <div class="features-mini-grid">
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-title">💰 Revenue-Focused</div>
+                        <div class="feature-mini-desc">Build products that generate real revenue from day one</div>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-title">🚀 Expert Development</div>
+                        <div class="feature-mini-desc">World-class developers at fractional costs</div>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-title">🎯 Market Validation</div>
+                        <div class="feature-mini-desc">Proven process to validate ideas before building</div>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-title">📈 Scalable Solutions</div>
+                        <div class="feature-mini-desc">Architecture designed for growth and profitability</div>
+                    </div>
+                    <div class="feature-mini-card">
+                        <div class="feature-mini-title">⚡ Fast Delivery</div>
+                        <div class="feature-mini-desc">From concept to market in 8-12 weeks</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots">
+        <div class="nav-dot active" onclick="switchView('home')" title="Home"></div>
+        <div class="nav-dot" onclick="switchView('services')" title="Services"></div>
+        <div class="nav-dot" onclick="switchView('portfolio')" title="Portfolio"></div>
+        <div class="nav-dot" onclick="switchView('contact')" title="Contact"></div>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <button class="fab" onclick="toggleQuickRef()" title="Quick Reference">�</button>
+        <button class="fab" onclick="window.open('#contact')" title="Get Quote">�</button>
+    </div> 
+                    Connect with specialists when you need them most.
+                </p>
+            </div>
+            <div class="value-card">
+                <span class="value-icon">💎</span>
+                <h3 class="value-title">Validated Opportunities</h3>
+                <p class="value-description">
+                    We identify genuine market needs and build targeted, profitable MicroSaaS solutions 
+                    through proven market validation processes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview Section -->
+    <section class="platform-section" id="services">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-description">
+            We specialize in building profitable MicroSaaS products from concept to market. 
+            Our comprehensive approach combines market validation, expert development, and growth strategies 
+            to ensure your software business succeeds.
+        </p>
+        
+        <div class="platform-features">
+            <div class="feature-card">
+                <h3 class="feature-title">Market Validation & Strategy</h3>
+                <p>Validate your idea with real market data before investing in development. We identify profitable opportunities and create go-to-market strategies.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Full-Stack Development</h3>
+                <p>Complete software development from frontend to backend, with modern tech stacks and scalable architecture.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">MicroSaaS Product Design</h3>
+                <p>Specialized in building focused, profitable SaaS products that solve specific problems exceptionally well.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Revenue Optimization</h3>
+                <p>Implement proven monetization strategies, pricing models, and growth tactics to maximize profitability.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Fractional CTO Services</h3>
+                <p>Get executive-level technical leadership and strategy without the full-time commitment.</p>
+            </div>
+            <div class="feature-card">
+                <h3 class="feature-title">Growth & Scaling</h3>
+                <p>Scale your successful MicroSaaS with advanced features, integrations, and expansion strategies.</p>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="features-mini-grid">
+            <div class="feature-mini-card">
+                <h3 class="feature-mini-title">Modern Tech Stack</h3>
+                <p class="feature-mini-desc">React, Node.js, Python, cloud-native architecture for scalability.</p>
+            </div>
+            <div class="feature-mini-card">
+                <h3 class="feature-mini-title">DevOps & Deployment</h3>
+                <p class="feature-mini-desc">Automated CI/CD, cloud deployment, monitoring and maintenance.</p>
+            </div>
+            <div class="feature-mini-card">
+                <h3 class="feature-mini-title">Security First</h3>
+                <p class="feature-mini-desc">Enterprise-grade security, compliance, and data protection.</p>
+            </div>
+            <div class="feature-mini-card">
+                <h3 class="feature-mini-title">Performance Optimization</h3>
+                <p class="feature-mini-desc">Fast, responsive applications built for user experience and conversion.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="access-section" id="portfolio">
+        <h2 class="section-title">Case Studies & Results</h2>
+        <p class="section-description">
+            Real results from real projects. See how we've helped businesses build profitable MicroSaaS products 
+            that generate consistent revenue and grow sustainably.
+        </p>
+        
+        <div class="access-grid">
+            <div class="access-card">
+                <h3 class="access-title">SaaS Analytics Tool</h3>
+                <p>Built a specialized analytics platform that reached $15K MRR within 6 months of launch.</p>
+                <a href="#case-study-1" class="access-link">View Case Study</a>
+            </div>
+            <div class="access-card">
+                <h3 class="access-title">B2B Automation Platform</h3>
+                <p>Developed workflow automation tool that scaled to 500+ paying customers in first year.</p>
+                <a href="#case-study-2" class="access-link">View Details</a>
+            </div>
+            <div class="access-card">
+                <h3 class="access-title">Niche CRM Solution</h3>
+                <p>Created industry-specific CRM that achieved 95% customer retention and $25K MRR.</p>
+                <a href="#case-study-3" class="access-link">See Results</a>
+            </div>
+            <div class="access-card">
+                <h3 class="access-title">API Integration Service</h3>
+                <p>Built connector platform that processes 1M+ API calls monthly with 99.9% uptime.</p>
+                <a href="#case-study-4" class="access-link">Technical Details</a>
+            </div>
+            <div class="access-card">
+                <h3 class="access-title">Content Management Tool</h3>
+                <p>Developed specialized CMS that grew from MVP to $40K ARR in 8 months.</p>
+                <a href="#case-study-5" class="access-link">Growth Story</a>
+            </div>
+            <div class="access-card">
+                <h3 class="access-title">Financial Dashboard</h3>
+                <p>Created real-time financial reporting tool for SMBs, achieving $30K MRR.</p>
+                <a href="#case-study-6" class="access-link">View Dashboard</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Reference Widget -->
+    <div class="quick-ref-widget" onclick="toggleQuickRef()"></div>
+    
+    <!-- Quick Reference Modal -->
+    <div class="quick-ref-modal" id="quickRefModal">
+        <div class="quick-ref-content">
+            <button class="quick-ref-close" onclick="toggleQuickRef()">&times;</button>
+            <h2 class="quick-ref-title">MicroSaaS Agency Overview</h2>
+            
+            <div class="quick-ref-section">
+                <h3>What We Do</h3>
+                <p><span class="quick-ref-highlight">Build Profitable MicroSaaS Products</span> - We specialize in creating focused, revenue-generating software solutions that solve specific business problems exceptionally well.</p>
+            </div>
+            
+            <div class="quick-ref-section">
+                <h3>Our Clients</h3>
+                <ul>
+                    <li><strong>Entrepreneurs & Startups</strong> - Turn your software ideas into profitable businesses</li>
+                    <li><strong>Small-Medium Businesses</strong> - Custom solutions without enterprise complexity</li>
+                    <li><strong>Technical Founders</strong> - Development partnerships with proven expertise</li>
+                    <li><strong>Growth Companies</strong> - Scale your existing products with advanced features</li>
+                </ul>
+            </div>
+            
+            <div class="quick-ref-section">
+                <h3>Why Choose Us</h3>
+                <ul>
+                    <li><span class="quick-ref-highlight">Revenue-First Approach</span> - Every decision optimized for profitability</li>
+                    <li><span class="quick-ref-highlight">Proven Track Record</span> - Portfolio of successful MicroSaaS products</li>
+                    <li><span class="quick-ref-highlight">Market Validation</span> - Test ideas before expensive development</li>
+                    <li><span class="quick-ref-highlight">Fractional Expertise</span> - World-class talent without full-time costs</li>
+                </ul>
+            </div>
+            
+            <div class="quick-ref-section">
+                <h3>Success Metrics</h3>
+                <p><span class="quick-ref-highlight">Average Client ROI: 300%+</span> | 8-12 week delivery timeline | 95% client satisfaction rate</p>
+            </div>
+            
+            <div class="quick-ref-section">
+                <h3>Get Started</h3>
+                <p>Ready to build your profitable MicroSaaS? <a href="#contact" style="color: var(--glass-blue);">Contact us</a> for a free consultation, or <a href="#portfolio" style="color: var(--glass-purple);">view our case studies</a> to see real results.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="neural-footer">
+        <div class="footer-content">
+            <h3 class="footer-title">MicroSaaS Development Agency</h3>
+            <p>Building profitable software solutions that generate real revenue and scale sustainably</p>
+            
+            <div class="footer-links">
+                <a href="#services" class="footer-link">Services</a>
+                <a href="#portfolio" class="footer-link">Portfolio</a>
+                <a href="#contact" class="footer-link">Contact</a>
+                <a href="#about" class="footer-link">About</a>
+            </div>
+            
+            <p style="margin-top: 30px; opacity: 0.6; font-size: 0.9rem;">
+                © 2024 MicroSaaS Development Agency. Turning ideas into profitable software businesses.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Liquid Glass Particle System
+        function createParticles() {
+            const particleContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const randomX = Math.random() * window.innerWidth;
+                const randomDelay = Math.random() * 20;
+                const randomDuration = 20 + Math.random() * 15;
+                
+                particle.style.left = randomX + 'px';
+                particle.style.animationDelay = randomDelay + 's';
+                particle.style.animationDuration = randomDuration + 's';
+                
+                // Subtle glass-like particles
+                const opacity = 0.3 + Math.random() * 0.3;
+                particle.style.background = `rgba(0, 122, 255, ${opacity})`;
+                particle.style.backdropFilter = 'blur(1px)';
+                
+                particleContainer.appendChild(particle);
+            }
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            initializeInteractiveEffects();
+            createCustomCursor();
+        });
+
+        // View switching function
+        function switchView(view) {
+            // Update navigation dots
+            document.querySelectorAll('.nav-dot').forEach(dot => dot.classList.remove('active'));
+            
+            // Simple view switching - smooth scroll to sections
+            if (view === 'services') {
+                document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+            } else if (view === 'portfolio') {
+                document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+            } else if (view === 'contact') {
+                // For now, show contact info or scroll to contact section
+                alert('Contact us at: hello@microsaasagency.com\n\nOr schedule a consultation call to discuss your project.');
+            } else if (view === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Quick Reference Modal
+        function toggleQuickRef() {
+            const modal = document.getElementById('quickRefModal');
+            if (modal && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        // Close modal on outside click
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('quickRefModal');
+            if (modal && e.target === modal) {
+                toggleQuickRef();
+            }
+        });
+
+        // CRAZY FUTURISTIC INTERACTIVE EFFECTS
+        function initializeInteractiveEffects() {
+            // Mouse tracking for card hover effects
+            document.querySelectorAll('.value-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    
+                    card.style.setProperty('--mouse-x', x + '%');
+                    card.style.setProperty('--mouse-y', y + '%');
+                });
+            });
+
+            // Sexy title hover effects
+            const title = document.querySelector('.hero-title');
+            if (title) {
+                title.setAttribute('data-text', title.textContent);
+                
+                title.addEventListener('mouseenter', function() {
+                    this.style.animation = 'titleShift 0.5s ease-out, titleGlow 4s ease-in-out infinite alternate';
+                    this.style.filter = 'drop-shadow(0 0 40px rgba(10, 132, 255, 0.8))';
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                title.addEventListener('mouseleave', function() {
+                    this.style.animation = 'titleGlow 4s ease-in-out infinite alternate, titleShift 12s ease-in-out infinite';
+                    this.style.filter = 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.1))';
+                    this.style.transform = 'scale(1)';
+                });
+            }
+
+            // Crazy button interactions
+            document.querySelectorAll('.cta-button').forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.animation = 'buttonFloat 0.3s ease-out, primaryPulse 1s ease-in-out infinite';
+                    
+                    // Create explosion effect
+                    createButtonExplosion(this);
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.animation = 'buttonFloat 6s ease-in-out infinite alternate, primaryPulse 8s ease-in-out infinite';
+                });
+            });
+
+            // Parallax effect for background
+            window.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth) * 100;
+                const y = (e.clientY / window.innerHeight) * 100;
+                
+                document.body.style.setProperty('--mouse-x', x + '%');
+                document.body.style.setProperty('--mouse-y', y + '%');
+            });
+
+            // Scroll-triggered animations
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const cards = document.querySelectorAll('.value-card');
+                
+                cards.forEach((card, index) => {
+                    const cardTop = card.offsetTop;
+                    const cardHeight = card.offsetHeight;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (scrollY + windowHeight > cardTop && scrollY < cardTop + cardHeight) {
+                        const progress = (scrollY + windowHeight - cardTop) / (windowHeight + cardHeight);
+                        const rotation = (progress - 0.5) * 10;
+                        const scale = 0.95 + (progress * 0.1);
+                        
+                        card.style.transform = `translateY(-${Math.sin(progress * Math.PI) * 20}px) rotateX(${rotation}deg) scale(${scale})`;
+                    }
+                });
+            });
+        }
+
+        // Create button explosion effect
+        function createButtonExplosion(button) {
+            const rect = button.getBoundingClientRect();
+            const particles = 12;
+            
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.left = rect.left + rect.width / 2 + 'px';
+                particle.style.top = rect.top + rect.height / 2 + 'px';
+                particle.style.width = '4px';
+                particle.style.height = '4px';
+                particle.style.background = 'radial-gradient(circle, rgba(10, 132, 255, 0.8), rgba(94, 92, 230, 0.6))';
+                particle.style.borderRadius = '50%';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '10000';
+                particle.style.boxShadow = '0 0 10px rgba(10, 132, 255, 0.8)';
+                
+                const angle = (i / particles) * Math.PI * 2;
+                const distance = 50 + Math.random() * 50;
+                const duration = 0.8 + Math.random() * 0.4;
+                
+                particle.animate([
+                    { 
+                        transform: 'translate(0, 0) scale(1)',
+                        opacity: 1
+                    },
+                    { 
+                        transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                });
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, duration * 1000);
+            }
+        }
+
+        // Quick Reference Modal
+        function toggleQuickRef() {
+            const modal = document.getElementById('quickRefModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('quickRefModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleQuickRef();
+            }
+        });
+
+        // Dynamic title effect with liquid glass aesthetic
+        const title = document.querySelector('.hero-title');
+        if (title) {
+            title.addEventListener('mouseenter', function() {
+                this.style.animation = 'none';
+                this.style.filter = 'drop-shadow(0 0 40px rgba(255, 255, 255, 0.3))';
+            });
+            
+            title.addEventListener('mouseleave', function() {
+                this.style.animation = 'titleGlow 4s ease-in-out infinite';
+                this.style.filter = '';
+            });
+        }
+
+        // Create custom cursor
+        function createCustomCursor() {
+            const cursor = document.createElement('div');
+            cursor.className = 'custom-cursor';
+            document.body.appendChild(cursor);
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+            });
+        }
+        
+        // Initialize custom cursor
+        createCustomCursor();
+    </script>
+</body>
+</html>

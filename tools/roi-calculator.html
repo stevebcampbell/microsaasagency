@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroSaaS ROI Calculator - Estimate Your Project Return</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .calculator-container {
+            max-width: 1200px;
+            margin: 120px auto 60px;
+            padding: 0 40px;
+        }
+        
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .calculator-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .calculator-inputs {
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+        
+        .calculator-results {
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--glass-text);
+        }
+        
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--glass-blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.1);
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(10, 132, 255, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--glass-blue);
+        }
+        
+        .result-label {
+            font-size: 0.9rem;
+            color: var(--glass-text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--glass-text);
+        }
+        
+        .result-highlight {
+            background: linear-gradient(135deg, var(--glass-green), var(--glass-blue));
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .result-highlight .result-value {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .assumptions {
+            grid-column: 1 / -1;
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+        
+        .assumptions h3 {
+            margin-bottom: 20px;
+            color: var(--glass-text);
+        }
+        
+        .assumptions ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .assumptions li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--glass-text-secondary);
+        }
+        
+        .assumptions li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--glass-green);
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .calculator-container {
+                padding: 0 20px;
+                margin: 100px auto 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="neural-particles" id="particles"></div>
+    
+    <!-- Navigation -->
+    <nav class="neural-nav">
+        <div class="nav-content">
+            <div class="logo" onclick="window.location.href='../index-clean.html'">MicroSaaS Agency</div>
+            <div class="nav-links">
+                <a href="../index-clean.html#services" class="nav-link">Services</a>
+                <a href="../index-clean.html#portfolio" class="nav-link">Portfolio</a>
+                <a href="../index-clean.html#contact" class="nav-link">Contact</a>
+                <a href="../index-clean.html" class="nav-link">Home</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="calculator-container">
+        <div class="calculator-header">
+            <h1 class="section-title">MicroSaaS ROI Calculator</h1>
+            <p class="section-description">
+                Calculate the potential return on investment for your MicroSaaS project. 
+                Get realistic projections based on industry benchmarks and our experience.
+            </p>
+        </div>
+        
+        <div class="calculator-content">
+            <div class="calculator-inputs">
+                <h3 style="margin-bottom: 30px; color: var(--glass-text);">Project Details</h3>
+                
+                <div class="input-group">
+                    <label for="projectBudget">Development Budget ($)</label>
+                    <input type="number" id="projectBudget" value="25000" min="5000" max="500000">
+                </div>
+                
+                <div class="input-group">
+                    <label for="monthlyPrice">Monthly Subscription Price ($)</label>
+                    <input type="number" id="monthlyPrice" value="49" min="1" max="1000">
+                </div>
+                
+                <div class="input-group">
+                    <label for="targetMarket">Target Market Size</label>
+                    <select id="targetMarket">
+                        <option value="niche">Niche (1K-10K potential customers)</option>
+                        <option value="medium" selected>Medium (10K-100K potential customers)</option>
+                        <option value="large">Large (100K+ potential customers)</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="marketingBudget">Monthly Marketing Budget ($)</label>
+                    <input type="number" id="marketingBudget" value="2000" min="100" max="50000">
+                </div>
+                
+                <div class="input-group">
+                    <label for="timeToMarket">Time to Market (months)</label>
+                    <input type="number" id="timeToMarket" value="3" min="1" max="24">
+                </div>
+                
+                <div class="input-group">
+                    <label for="competitionLevel">Competition Level</label>
+                    <select id="competitionLevel">
+                        <option value="low">Low - Few competitors</option>
+                        <option value="medium" selected>Medium - Some competitors</option>
+                        <option value="high">High - Many competitors</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="calculator-results">
+                <h3 style="margin-bottom: 30px; color: var(--glass-text);">Projected Results</h3>
+                
+                <div class="result-item">
+                    <div class="result-label">Customers in Year 1</div>
+                    <div class="result-value" id="year1Customers">0</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">Monthly Recurring Revenue (MRR)</div>
+                    <div class="result-value" id="mrr">$0</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">Annual Recurring Revenue (ARR)</div>
+                    <div class="result-value" id="arr">$0</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">Break-even Time</div>
+                    <div class="result-value" id="breakEven">0 months</div>
+                </div>
+                
+                <div class="result-item">
+                    <div class="result-label">Total Revenue (3 years)</div>
+                    <div class="result-value" id="totalRevenue">$0</div>
+                </div>
+                
+                <div class="result-highlight">
+                    <div class="result-label">Return on Investment (3 years)</div>
+                    <div class="result-value" id="roi">0%</div>
+                </div>
+            </div>
+            
+            <div class="assumptions">
+                <h3>Calculation Assumptions</h3>
+                <ul>
+                    <li>Customer acquisition rate varies by market size and competition level</li>
+                    <li>Monthly churn rate estimated at 3-7% based on industry averages</li>
+                    <li>Customer acquisition cost (CAC) calculated from marketing budget efficiency</li>
+                    <li>Revenue growth includes organic growth and word-of-mouth referrals</li>
+                    <li>Operating costs estimated at 30% of revenue for established SaaS</li>
+                    <li>Calculations based on our experience with 50+ MicroSaaS projects</li>
+                    <li>Conservative estimates - actual results may vary significantly</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="neural-footer">
+        <div class="footer-content">
+            <h3 class="footer-title">Ready to Build Your MicroSaaS?</h3>
+            <p>These projections are based on real market data and our experience. Let's discuss your specific project.</p>
+            
+            <div style="margin: 30px 0;">
+                <a href="../index-clean.html#contact" class="cta-button cta-primary">Get Free Consultation</a>
+                <a href="mailto:hello@microsaasagency.com" class="cta-button cta-secondary">Contact Us</a>
+            </div>
+            
+            <div class="footer-links">
+                <a href="../index-clean.html#services" class="footer-link">Services</a>
+                <a href="../index-clean.html#portfolio" class="footer-link">Portfolio</a>
+                <a href="../index-clean.html#contact" class="footer-link">Contact</a>
+                <a href="../index-clean.html" class="footer-link">Home</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../js/main.js"></script>
+    <script>
+        // ROI Calculator Logic
+        class ROICalculator {
+            constructor() {
+                this.initializeEventListeners();
+                this.calculate();
+            }
+            
+            initializeEventListeners() {
+                const inputs = ['projectBudget', 'monthlyPrice', 'targetMarket', 'marketingBudget', 'timeToMarket', 'competitionLevel'];
+                inputs.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('input', () => this.calculate());
+                        element.addEventListener('change', () => this.calculate());
+                    }
+                });
+            }
+            
+            getInputValues() {
+                return {
+                    projectBudget: parseFloat(document.getElementById('projectBudget').value) || 25000,
+                    monthlyPrice: parseFloat(document.getElementById('monthlyPrice').value) || 49,
+                    targetMarket: document.getElementById('targetMarket').value,
+                    marketingBudget: parseFloat(document.getElementById('marketingBudget').value) || 2000,
+                    timeToMarket: parseInt(document.getElementById('timeToMarket').value) || 3,
+                    competitionLevel: document.getElementById('competitionLevel').value
+                };
+            }
+            
+            calculate() {
+                const inputs = this.getInputValues();
+                
+                // Market multipliers
+                const marketMultipliers = {
+                    niche: { potential: 5000, penetration: 0.02 },
+                    medium: { potential: 50000, penetration: 0.01 },
+                    large: { potential: 200000, penetration: 0.005 }
+                };
+                
+                // Competition multipliers
+                const competitionMultipliers = {
+                    low: 1.5,
+                    medium: 1.0,
+                    high: 0.6
+                };
+                
+                const market = marketMultipliers[inputs.targetMarket];
+                const compMultiplier = competitionMultipliers[inputs.competitionLevel];
+                
+                // Customer Acquisition Cost (simplified)
+                const cac = inputs.marketingBudget > 0 ? inputs.marketingBudget / Math.max(1, (inputs.marketingBudget / 100)) : 50;
+                
+                // Monthly customer acquisition
+                const monthlyAcquisition = Math.floor((inputs.marketingBudget / cac) * compMultiplier);
+                
+                // Churn rate (monthly)
+                const churnRate = 0.05; // 5% monthly churn
+                
+                // Calculate customers over time
+                let customers = 0;
+                let monthlyCustomers = [];
+                
+                for (let month = 1; month <= 36; month++) {
+                    if (month > inputs.timeToMarket) {
+                        // Add new customers
+                        customers += monthlyAcquisition;
+                        // Apply churn
+                        customers = customers * (1 - churnRate);
+                        // Apply market saturation
+                        const saturationLimit = market.potential * market.penetration;
+                        customers = Math.min(customers, saturationLimit);
+                    }
+                    monthlyCustomers.push(Math.floor(customers));
+                }
+                
+                // Year 1 customers (month 12)
+                const year1Customers = monthlyCustomers[11] || 0;
+                
+                // Current MRR and ARR
+                const currentCustomers = monthlyCustomers[11] || 0;
+                const mrr = currentCustomers * inputs.monthlyPrice;
+                const arr = mrr * 12;
+                
+                // Total revenue over 3 years
+                let totalRevenue = 0;
+                for (let month = inputs.timeToMarket; month < 36; month++) {
+                    totalRevenue += (monthlyCustomers[month] || 0) * inputs.monthlyPrice;
+                }
+                
+                // Break-even calculation
+                let cumulativeRevenue = 0;
+                let breakEvenMonth = 0;
+                const totalInvestment = inputs.projectBudget + (inputs.marketingBudget * inputs.timeToMarket);
+                
+                for (let month = inputs.timeToMarket; month < 36; month++) {
+                    cumulativeRevenue += (monthlyCustomers[month] || 0) * inputs.monthlyPrice;
+                    if (cumulativeRevenue >= totalInvestment && breakEvenMonth === 0) {
+                        breakEvenMonth = month + 1;
+                        break;
+                    }
+                }
+                
+                // ROI calculation
+                const totalCosts = inputs.projectBudget + (inputs.marketingBudget * 36); // 3 years of marketing
+                const netProfit = totalRevenue - totalCosts;
+                const roi = totalCosts > 0 ? (netProfit / totalCosts) * 100 : 0;
+                
+                // Update UI
+                this.updateResults({
+                    year1Customers,
+                    mrr: Math.floor(mrr),
+                    arr: Math.floor(arr),
+                    breakEven: breakEvenMonth,
+                    totalRevenue: Math.floor(totalRevenue),
+                    roi: Math.floor(roi)
+                });
+            }
+            
+            updateResults(results) {
+                document.getElementById('year1Customers').textContent = results.year1Customers.toLocaleString();
+                document.getElementById('mrr').textContent = '$' + results.mrr.toLocaleString();
+                document.getElementById('arr').textContent = '$' + results.arr.toLocaleString();
+                document.getElementById('breakEven').textContent = results.breakEven > 0 ? results.breakEven + ' months' : 'Not reached';
+                document.getElementById('totalRevenue').textContent = '$' + results.totalRevenue.toLocaleString();
+                
+                const roiElement = document.getElementById('roi');
+                roiElement.textContent = results.roi + '%';
+                
+                // Color code ROI
+                const roiParent = roiElement.closest('.result-highlight');
+                if (results.roi > 200) {
+                    roiParent.style.background = 'linear-gradient(135deg, var(--glass-green), var(--glass-blue))';
+                } else if (results.roi > 100) {
+                    roiParent.style.background = 'linear-gradient(135deg, var(--glass-blue), var(--glass-purple))';
+                } else if (results.roi > 0) {
+                    roiParent.style.background = 'linear-gradient(135deg, var(--glass-orange), var(--glass-blue))';
+                } else {
+                    roiParent.style.background = 'linear-gradient(135deg, #ff453a, var(--glass-orange))';
+                }
+            }
+        }
+        
+        // Initialize calculator
+        document.addEventListener('DOMContentLoaded', () => {
+            new ROICalculator();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human 5.0 - Neural Visual Assets Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-primary: #ffffff;
+            --glass-secondary: #fafbfc;
+            --glass-accent: #f5f7fa;
+            --glass-highlight: #ffffff;
+            --glass-blue: #0a84ff;
+            --glass-purple: #5e5ce6;
+            --glass-green: #32d74b;
+            --glass-orange: #ff9f0a;
+            --void-bg: linear-gradient(135deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            --glass-dark: #1d1d1f;
+            --glass-medium: #86868b;
+            --glass-light: #ffffff;
+            --glass-text: #1d1d1f;
+            --glass-text-secondary: rgba(29, 29, 31, 0.68);
+            --liquid-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 255, 0.8) 100%);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--void-bg);
+            color: var(--glass-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Neural Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(0, 0, 5, 0.95) 0%, rgba(10, 10, 18, 0.98) 100%);
+            animation: neuralPulse 20s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes neuralPulse {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            100% { filter: hue-rotate(90deg) brightness(1.1); }
+        }
+
+        /* Container */
+        .showcase-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Header */
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.9) 0%, rgba(10, 10, 18, 0.95) 100%);
+            border: 1px solid;
+            border-image: var(--evolution-gradient) 1;
+            border-radius: 30px;
+            backdrop-filter: blur(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .showcase-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--evolution-gradient);
+            opacity: 0.05;
+            animation: headerShimmer 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes headerShimmer {
+            0% { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(100%) skewX(-15deg); }
+        }
+
+        .main-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: var(--evolution-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 400% 400%;
+            animation: titleEvolution 6s ease-in-out infinite;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        @keyframes titleEvolution {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--consciousness-light);
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 40px;
+        }
+
+        .evolution-badge {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.2) 0%, rgba(0, 212, 255, 0.2) 100%);
+            border: 2px solid var(--bio-accent);
+            border-radius: 50px;
+            color: var(--bio-accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 10px 40px rgba(57, 255, 20, 0.3);
+            animation: badgePulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes badgePulse {
+            0% { transform: scale(1); box-shadow: 0 10px 40px rgba(57, 255, 20, 0.3); }
+            100% { transform: scale(1.05); box-shadow: 0 15px 60px rgba(57, 255, 20, 0.5); }
+        }
+
+        /* Assets Grid */
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        .asset-card {
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.8) 0%, rgba(10, 10, 18, 0.9) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            padding: 50px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+        }
+
+        .asset-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.05) 0%, rgba(138, 43, 226, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+
+        .asset-card:hover::before {
+            opacity: 1;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            border-color: var(--neural-primary);
+            box-shadow: 
+                0 30px 100px rgba(0, 212, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .asset-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--evolution-gradient);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 40px;
+            animation: iconFloat 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .asset-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--neural-primary);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .asset-description {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--consciousness-light);
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .asset-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .asset-features li {
+            padding: 12px 0;
+            color: var(--consciousness-light);
+            opacity: 0.8;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .asset-features li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--bio-accent);
+            font-size: 1.2rem;
+        }
+
+        .neural-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+            border: 2px solid;
+            border-image: var(--evolution-gradient) 1;
+            border-radius: 50px;
+            color: var(--consciousness-light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .neural-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--evolution-gradient);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .neural-button:hover::before {
+            left: 0;
+        }
+
+        .neural-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(0, 212, 255, 0.4),
+                0 0 100px rgba(138, 43, 226, 0.3);
+            color: var(--void-bg);
+            font-weight: 700;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .primary-button {
+            border-color: var(--neural-primary);
+        }
+
+        .secondary-button {
+            border-color: var(--bio-accent);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.9) 0%, rgba(10, 10, 18, 0.95) 100%);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            border-radius: 25px;
+            padding: 60px;
+            text-align: center;
+            backdrop-filter: blur(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg, rgba(57, 255, 20, 0.1), rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1), rgba(255, 20, 147, 0.1));
+            animation: statsRotate 25s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes statsRotate {
+            0% { transform: rotate(0deg) scale(0.8); }
+            100% { transform: rotate(360deg) scale(1.2); }
+        }
+
+        .stats-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            color: var(--bio-accent);
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .stat-item {
+            padding: 30px;
+            background: rgba(0, 0, 5, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--neural-primary);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--neural-primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--consciousness-light);
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .showcase-container {
+                padding: 40px 15px;
+            }
+            
+            .showcase-header {
+                padding: 60px 30px;
+                margin-bottom: 60px;
+            }
+            
+            .main-title {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+            
+            .assets-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .asset-card {
+                padding: 40px 30px;
+            }
+            
+            .asset-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+                margin-bottom: 30px;
+            }
+            
+            .asset-title {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .neural-button {
+                justify-content: center;
+                padding: 15px 25px;
+            }
+            
+            .stats-section {
+                padding: 40px 25px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <!-- Header -->
+        <div class="showcase-header">
+            <h1 class="main-title">Neural Assets</h1>
+            <p class="main-subtitle">Next-Generation Visual Communication Tools</p>
+            <div class="evolution-badge">Human 5.0 Compatible</div>
+        </div>
+
+        <!-- Assets Grid -->
+        <div class="assets-grid">
+            <!-- Platform Infographic -->
+            <div class="asset-card">
+                <div class="asset-icon">🧠</div>
+                <h2 class="asset-title">Neural Platform Interface</h2>
+                <p class="asset-description">
+                    An immersive, full-screen infographic that showcases the Human 5.0 platform through advanced 3D visuals, neural particle systems, and consciousness-aware navigation.
+                </p>
+                <ul class="asset-features">
+                    <li>Holographic interface design</li>
+                    <li>Neural particle animation system</li>
+                    <li>Quantum field backgrounds</li>
+                    <li>Interactive consciousness nodes</li>
+                    <li>Responsive neural architecture</li>
+                    <li>Advanced CSS3/JavaScript effects</li>
+                </ul>
+                <div class="button-group">
+                    <a href="platform-infographic-v5.html" class="neural-button primary-button" target="_blank">
+                        <span>🚀</span>
+                        Experience Interface
+                    </a>
+                    <a href="platform-infographic-v5.html" class="neural-button secondary-button" download>
+                        <span>💾</span>
+                        Download Asset
+                    </a>
+                </div>
+            </div>
+
+            <!-- ROI Calculator -->
+            <div class="asset-card">
+                <div class="asset-icon">🧮</div>
+                <h2 class="asset-title">Neural ROI Calculator</h2>
+                <p class="asset-description">
+                    A sophisticated calculation engine that quantifies Human 5.0 evolution potential through advanced algorithms, user profiling, and real-time neural processing visualization.
+                </p>
+                <ul class="asset-features">
+                    <li>Advanced user profiling system</li>
+                    <li>Real-time calculation engine</li>
+                    <li>Animated result visualization</li>
+                    <li>Interactive quantum sliders</li>
+                    <li>Neural particle effects</li>
+                    <li>Consciousness-aware UX</li>
+                </ul>
+                <div class="button-group">
+                    <a href="roi-calculator-v5.html" class="neural-button primary-button" target="_blank">
+                        <span>⚡</span>
+                        Launch Calculator
+                    </a>
+                    <a href="roi-calculator-v5.html" class="neural-button secondary-button" download>
+                        <span>💾</span>
+                        Download Tool
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Stats -->
+        <div class="stats-section">
+            <h2 class="stats-title">Neural Performance Metrics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Visual Impact Score</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5.0</div>
+                    <div class="stat-label">Evolution Rating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Scalability Factor</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2024</div>
+                    <div class="stat-label">Future-Ready</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Stagger animation for asset cards
+            const cards = document.querySelectorAll('.asset-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 300 + 500);
+            });
+
+            // Interactive hover effects
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-15px) rotateX(10deg) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
+                });
+            });
+
+            // Stats counter animation
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const observerOptions = {
+                threshold: 0.5,
+                triggerOnce: true
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        
+                        if (finalValue !== '∞') {
+                            animateCounter(target, 0, parseInt(finalValue.replace('%', '')), 2000);
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            statNumbers.forEach(stat => {
+                observer.observe(stat);
+            });
+        });
+
+        function animateCounter(element, start, end, duration) {
+            const startTime = performance.now();
+            const range = end - start;
+
+            const updateCounter = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentValue = Math.round(start + (range * easeOutQuart));
+                
+                const originalText = element.textContent;
+                const suffix = originalText.includes('%') ? '%' : '';
+                element.textContent = currentValue + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+            };
+
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Particle generation for enhanced visuals
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                createFloatingParticle();
+            }
+        }, 3000);
+
+        function createFloatingParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: 3px;
+                height: 3px;
+                background: var(--neural-primary);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1000;
+                left: ${Math.random() * 100}%;
+                top: 100%;
+                box-shadow: 0 0 12px var(--neural-primary);
+                animation: floatUp 8s ease-out forwards;
+            `;
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 8000);
+        }
+
+        // Add floating particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 0;
+                    transform: translateY(0) rotate(0deg);
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100vh) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

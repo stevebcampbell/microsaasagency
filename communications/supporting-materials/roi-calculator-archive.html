@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human 5.0 ROI Neural Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-primary: #ffffff;
+            --glass-secondary: #fafbfc;
+            --glass-accent: #f5f7fa;
+            --glass-highlight: #ffffff;
+            --glass-blue: #0a84ff;
+            --glass-purple: #5e5ce6;
+            --glass-green: #32d74b;
+            --glass-orange: #ff9f0a;
+            --void-bg: linear-gradient(135deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            --glass-dark: #1d1d1f;
+            --glass-medium: #86868b;
+            --glass-light: #ffffff;
+            --glass-text: #1d1d1f;
+            --glass-text-secondary: rgba(29, 29, 31, 0.68);
+            --liquid-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 255, 0.8) 100%);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: rgba(0, 0, 0, 0.08);
+            --success-glow: #32d74b;
+            --warning-glow: #ff9f0a;
+            --critical-glow: #ff453a;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--void-bg);
+            color: var(--glass-text);
+            overflow-x: hidden;
+            min-height: 100vh;
+            cursor: default;
+            position: relative;
+        }
+
+        /* Neural Background System */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(57, 255, 20, 0.05) 0%, transparent 40%),
+                linear-gradient(45deg, rgba(0, 0, 5, 0.95) 0%, rgba(10, 10, 18, 0.98) 100%);
+            animation: neuralPulse 15s ease-in-out infinite alternate;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 212, 255, 0.02) 2px,
+                    rgba(0, 212, 255, 0.02) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(138, 43, 226, 0.02) 2px,
+                    rgba(138, 43, 226, 0.02) 4px
+                );
+            animation: gridShift 30s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes neuralPulse {
+            0% { filter: hue-rotate(0deg) brightness(1); }
+            100% { filter: hue-rotate(120deg) brightness(1.2); }
+        }
+
+        @keyframes gridShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Main Calculator Interface */
+        .neural-calculator {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header Section */
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.9) 0%, rgba(10, 10, 18, 0.95) 100%);
+            border: 1px solid;
+            border-image: var(--evolution-gradient) 1;
+            border-radius: 30px;
+            backdrop-filter: blur(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculator-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg, rgba(0, 212, 255, 0.1), rgba(138, 43, 226, 0.1), rgba(57, 255, 20, 0.1), rgba(255, 20, 147, 0.1));
+            animation: headerRotate 20s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes headerRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(360deg) scale(1.1); }
+        }
+
+        .calculator-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            background: var(--evolution-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 400% 400%;
+            animation: titleEvolution 4s ease-in-out infinite;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes titleEvolution {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .calculator-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--consciousness-light);
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main Calculator Grid */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* Input Panel */
+        .input-panel {
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.8) 0%, rgba(10, 10, 18, 0.9) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 25px;
+            padding: 50px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.05) 0%, rgba(138, 43, 226, 0.05) 100%);
+            z-index: -1;
+        }
+
+        .panel-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--neural-primary);
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Form Groups */
+        .neural-form-group {
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .neural-label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--consciousness-light);
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .neural-select,
+        .neural-input {
+            width: 100%;
+            padding: 18px 25px;
+            background: rgba(0, 0, 5, 0.7);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            color: var(--consciousness-light);
+            font-size: 1.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+        }
+
+        .neural-select:focus,
+        .neural-input:focus {
+            outline: none;
+            border-color: var(--neural-primary);
+            box-shadow: 
+                0 0 30px rgba(0, 212, 255, 0.4),
+                inset 0 0 20px rgba(0, 212, 255, 0.1);
+            background: rgba(0, 0, 5, 0.9);
+        }
+
+        .neural-select option {
+            background: var(--neural-dark);
+            color: var(--consciousness-light);
+            padding: 10px;
+        }
+
+        /* Range Slider */
+        .range-container {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        .neural-range {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.2) 0%, rgba(138, 43, 226, 0.2) 100%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .neural-range::-webkit-slider-thumb {
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--evolution-gradient);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .neural-range::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+        }
+
+        .range-value {
+            position: absolute;
+            right: 0;
+            top: -40px;
+            background: var(--evolution-gradient);
+            color: var(--void-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.8) 0%, rgba(10, 10, 18, 0.9) 100%);
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            border-radius: 25px;
+            padding: 50px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(57, 255, 20, 0.05) 0%, rgba(255, 20, 147, 0.05) 100%);
+            z-index: -1;
+        }
+
+        /* Metric Cards */
+        .metrics-grid {
+            display: grid;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.6) 0%, rgba(26, 26, 53, 0.8) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neural-primary);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(0, 212, 255, 0.1) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .metric-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .metric-title {
+            font-size: 1rem;
+            color: var(--consciousness-light);
+            opacity: 0.8;
+            margin-bottom: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .metric-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--neural-primary);
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .metric-subtitle {
+            font-size: 0.9rem;
+            color: var(--consciousness-light);
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        /* ROI Visualization */
+        .roi-visualization {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            border: 2px solid var(--bio-accent);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roi-visualization::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(from 0deg, rgba(57, 255, 20, 0.2), rgba(0, 212, 255, 0.2), rgba(138, 43, 226, 0.2), rgba(255, 20, 147, 0.2));
+            animation: roiRotate 15s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes roiRotate {
+            0% { transform: rotate(0deg) scale(0.8); }
+            100% { transform: rotate(360deg) scale(1.2); }
+        }
+
+        .roi-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--bio-accent);
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .roi-percentage {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--bio-accent), var(--neural-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 0 40px rgba(57, 255, 20, 0.6);
+            animation: roiPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes roiPulse {
+            0% { transform: scale(1); filter: brightness(1); }
+            100% { transform: scale(1.05); filter: brightness(1.2); }
+        }
+
+        .roi-timeline {
+            font-size: 1.1rem;
+            color: var(--consciousness-light);
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .neural-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 35px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+            border: 2px solid;
+            border-image: var(--evolution-gradient) 1;
+            border-radius: 50px;
+            color: var(--consciousness-light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .neural-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--evolution-gradient);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .neural-button:hover::before {
+            left: 0;
+        }
+
+        .neural-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(0, 212, 255, 0.4),
+                0 0 100px rgba(138, 43, 226, 0.3);
+            color: var(--void-bg);
+            font-weight: 700;
+        }
+
+        .neural-button.primary {
+            border-color: var(--neural-primary);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .neural-button.secondary {
+            border-color: var(--bio-accent);
+            box-shadow: 0 10px 40px rgba(57, 255, 20, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .input-panel,
+            .results-panel {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .neural-calculator {
+                padding: 20px 15px;
+            }
+            
+            .calculator-header {
+                padding: 60px 30px;
+                margin-bottom: 40px;
+            }
+            
+            .calculator-title {
+                font-size: clamp(2rem, 8vw, 3.5rem);
+            }
+            
+            .calculator-subtitle {
+                font-size: clamp(1rem, 4vw, 1.4rem);
+            }
+            
+            .input-panel,
+            .results-panel {
+                padding: 30px 20px;
+            }
+            
+            .panel-title {
+                font-size: 1.5rem;
+                margin-bottom: 30px;
+            }
+            
+            .neural-form-group {
+                margin-bottom: 25px;
+            }
+            
+            .metric-value {
+                font-size: 1.8rem;
+            }
+            
+            .roi-percentage {
+                font-size: 3rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .neural-button {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .calculating {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .calculating .metric-value {
+            animation: calculating 1.5s ease-in-out infinite;
+        }
+
+        @keyframes calculating {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="neural-calculator">
+        <!-- Header -->
+        <div class="calculator-header">
+            <h1 class="calculator-title">ROI Neural Calculator</h1>
+            <p class="calculator-subtitle">Quantify Your Evolution Potential</p>
+        </div>
+
+        <!-- Main Calculator -->
+        <div class="calculator-grid">
+            <!-- Input Panel -->
+            <div class="input-panel">
+                <h2 class="panel-title">Neural Input Parameters</h2>
+                
+                <div class="neural-form-group">
+                    <label class="neural-label" for="userType">Consciousness Profile</label>
+                    <select class="neural-select" id="userType">
+                        <option value="student">Student / New Graduate</option>
+                        <option value="midcareer">Mid-Career Professional</option>
+                        <option value="executive">Business Executive</option>
+                        <option value="entrepreneur">Entrepreneur / Startup</option>
+                        <option value="freelancer">Freelancer / Consultant</option>
+                        <option value="retiree">Experienced Professional</option>
+                    </select>
+                </div>
+
+                <div class="neural-form-group">
+                    <label class="neural-label" for="currentIncome">Current Annual Neural Input ($)</label>
+                    <input type="number" class="neural-input" id="currentIncome" min="0" step="1000" placeholder="75000">
+                </div>
+
+                <div class="neural-form-group">
+                    <label class="neural-label" for="workHours">Weekly Processing Hours</label>
+                    <div class="range-container">
+                        <input type="range" class="neural-range" id="workHours" min="20" max="80" value="40">
+                        <span class="range-value" id="workHoursValue">40 hrs</span>
+                    </div>
+                </div>
+
+                <div class="neural-form-group">
+                    <label class="neural-label" for="productivity">Current Efficiency Level (%)</label>
+                    <div class="range-container">
+                        <input type="range" class="neural-range" id="productivity" min="30" max="100" value="70">
+                        <span class="range-value" id="productivityValue">70%</span>
+                    </div>
+                </div>
+
+                <div class="neural-form-group">
+                    <label class="neural-label" for="growthGoal">Evolution Target (%)</label>
+                    <div class="range-container">
+                        <input type="range" class="neural-range" id="growthGoal" min="50" max="500" value="200">
+                        <span class="range-value" id="growthGoalValue">200%</span>
+                    </div>
+                </div>
+
+                <div class="neural-form-group">
+                    <label class="neural-label" for="timeframe">Evolution Timeline</label>
+                    <select class="neural-select" id="timeframe">
+                        <option value="3">3 Months - Rapid Evolution</option>
+                        <option value="6">6 Months - Balanced Growth</option>
+                        <option value="12" selected>12 Months - Complete Transformation</option>
+                        <option value="24">24 Months - Deep Integration</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel">
+                <h2 class="panel-title" style="color: var(--bio-accent);">Evolution Projections</h2>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Enhanced Productivity</div>
+                        <div class="metric-value" id="productivityIncrease">+250%</div>
+                        <div class="metric-subtitle">Above baseline performance</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-title">Time Efficiency</div>
+                        <div class="metric-value" id="timeSaved">28 hrs</div>
+                        <div class="metric-subtitle">Weekly time reclaimed</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-title">Revenue Potential</div>
+                        <div class="metric-value" id="revenueIncrease">$187,500</div>
+                        <div class="metric-subtitle">Annual uplift potential</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-title">Decision Accuracy</div>
+                        <div class="metric-value" id="decisionAccuracy">94%</div>
+                        <div class="metric-subtitle">AI-enhanced precision</div>
+                    </div>
+                </div>
+
+                <div class="roi-visualization">
+                    <div class="roi-title">Total ROI Projection</div>
+                    <div class="roi-percentage" id="totalROI">2,400%</div>
+                    <div class="roi-timeline" id="roiTimeline">Within 12 months of evolution</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="platform-infographic-v5.html" class="neural-button secondary">
+                <span>🧠</span>
+                Explore Platform
+            </a>
+            <a href="#" class="neural-button primary">
+                <span>🚀</span>
+                Begin Evolution
+            </a>
+        </div>
+    </div>
+
+    <script src="roi-calculator-v5.js"></script>
+</body>
+</html>

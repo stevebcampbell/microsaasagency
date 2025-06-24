@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroSaaS Agency - Human 5.0 Platform Overview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-primary: #ffffff;
+            --glass-secondary: #fafbfc;
+            --glass-accent: #f5f7fa;
+            --glass-highlight: #ffffff;
+            --glass-blue: #0a84ff;
+            --glass-purple: #5e5ce6;
+            --glass-green: #32d74b;
+            --glass-orange: #ff9f0a;
+            --void-bg: linear-gradient(135deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            --glass-dark: #1d1d1f;
+            --glass-medium: #86868b;
+            --glass-light: #ffffff;
+            --glass-text: #1d1d1f;
+            --glass-text-secondary: rgba(29, 29, 31, 0.68);
+            --liquid-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 255, 0.8) 100%);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--void-bg);
+            color: var(--glass-text);
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Liquid Glass Background System */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(10, 132, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(94, 92, 230, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(50, 215, 75, 0.06) 0%, transparent 40%),
+                linear-gradient(180deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            animation: liquidFlow 30s ease-in-out infinite alternate;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(10, 132, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(10, 132, 255, 0.02) 1px, transparent 1px);
+            background-size: 120px 120px;
+            animation: gridFloat 60s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes liquidFlow {
+            0% { filter: blur(0px) brightness(1.1); }
+            100% { filter: blur(2px) brightness(1.25); }
+        }
+
+        @keyframes gridFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(120px, 120px); }
+        }
+
+        /* Main Container */
+        .agency-overview {
+            width: 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        /* Navigation */
+        .neural-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.9) 0%, rgba(10, 10, 18, 0.95) 100%);
+            backdrop-filter: blur(30px);
+            border: 1px solid;
+            border-image: var(--evolution-gradient) 1;
+            border-radius: 50px;
+            padding: 15px 35px;
+            box-shadow: 0 25px 80px rgba(0, 212, 255, 0.4);
+        }
+
+        .consciousness-node {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 70%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .consciousness-node.active,
+        .consciousness-node:hover {
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.8) 0%, rgba(138, 43, 226, 0.6) 100%);
+            border-color: var(--neural-primary);
+            box-shadow: 0 0 40px var(--neural-primary);
+            transform: scale(1.4);
+        }
+
+        /* Section Framework */
+        .evolution-section {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 100px 40px;
+            scroll-snap-align: start;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            text-align: center;
+        }
+
+        .agency-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            font-weight: 900;
+            background: var(--evolution-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 400% 400%;
+            animation: titleEvolution 6s ease-in-out infinite;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes titleEvolution {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .agency-subtitle {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: var(--consciousness-light);
+            margin-bottom: 40px;
+            font-weight: 300;
+            animation: subtitleMaterialize 3s ease-out 1s forwards;
+            opacity: 0;
+        }
+
+        @keyframes subtitleMaterialize {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .agency-description {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            max-width: 1000px;
+            margin: 0 auto 50px;
+            opacity: 0.9;
+        }
+
+        /* Value Proposition Grid */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            width: 100%;
+            margin-top: 80px;
+        }
+
+        .value-card {
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.8) 0%, rgba(10, 10, 18, 0.9) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.05) 0%, rgba(138, 43, 226, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neural-primary);
+            box-shadow: 0 30px 100px rgba(0, 212, 255, 0.3);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .value-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--neural-primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .value-description {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Services Section */
+        .services-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            text-align: center;
+            margin-bottom: 60px;
+            background: var(--evolution-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.8) 0%, rgba(10, 10, 18, 0.9) 100%);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 25px;
+            padding: 50px;
+            backdrop-filter: blur(20px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            border-color: var(--quantum-secondary);
+            box-shadow: 0 40px 120px rgba(138, 43, 226, 0.4);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--evolution-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            animation: iconPulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconPulse {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(138, 43, 226, 0.3); }
+            100% { transform: scale(1.05); box-shadow: 0 0 40px rgba(138, 43, 226, 0.6); }
+        }
+
+        .service-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            color: var(--quantum-secondary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .service-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .service-features {
+            list-style: none;
+        }
+
+        .service-features li {
+            padding: 8px 0;
+            opacity: 0.8;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .service-features li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--bio-accent);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 30px;
+            background: var(--evolution-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        .cta-description {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .neural-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(138, 43, 226, 0.1) 100%);
+            border: 2px solid;
+            border-image: var(--evolution-gradient) 1;
+            border-radius: 50px;
+            color: var(--consciousness-light);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .neural-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--evolution-gradient);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .neural-cta:hover::before {
+            left: 0;
+        }
+
+        .neural-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.4);
+            color: var(--void-bg);
+            font-weight: 700;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .evolution-section {
+                padding: 80px 20px;
+            }
+            
+            .value-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .value-card,
+            .service-card {
+                padding: 30px 25px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="agency-overview">
+        <!-- Navigation -->
+        <nav class="neural-nav">
+            <div class="consciousness-node active" data-section="0"></div>
+            <div class="consciousness-node" data-section="1"></div>
+            <div class="consciousness-node" data-section="2"></div>
+            <div class="consciousness-node" data-section="3"></div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="evolution-section hero-section" id="section-0">
+            <h1 class="agency-title">MicroSaaS Agency</h1>
+            <p class="agency-subtitle">Global Human-Authenticated AI Collaboration Platform</p>
+            <p class="agency-description">
+                We revolutionize business development through the Human 5.0 framework, transforming traditional hourly billing into outcome-based partnerships. Our platform combines human expertise with AI acceleration, creating intellectual property while sharing risk and reward fairly.
+            </p>
+            
+            <div class="value-grid">
+                <div class="value-card">
+                    <span class="value-icon">🚀</span>
+                    <h3 class="value-title">Revolutionary Pricing</h3>
+                    <p class="value-description">Outcome-based partnerships that eliminate unfair hourly billing, sharing risk and reward to create true business alignment.</p>
+                </div>
+                
+                <div class="value-card">
+                    <span class="value-icon">🧠</span>
+                    <h3 class="value-title">Human-AI Synthesis</h3>
+                    <p class="value-description">Authenticated human reasoning combined with AI acceleration, creating intellectual property through documented decision-making.</p>
+                </div>
+                
+                <div class="value-card">
+                    <span class="value-icon">🌍</span>
+                    <h3 class="value-title">Global Empowerment</h3>
+                    <p class="value-description">Democratizing access to AI tools and knowledge monetization, enabling anyone with expertise to participate in the Human 5.0 economy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="evolution-section" id="section-1">
+            <h2 class="services-title">Core Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3 class="service-title">Outcome-Based Partnerships</h3>
+                    <p class="service-description">Revolutionary pain-gain sharing models that align our success with client results through documented human strategic reasoning.</p>
+                    <ul class="service-features">
+                        <li>Revenue share partnerships</li>
+                        <li>Cost savings agreements</li>
+                        <li>Risk-sharing arrangements</li>
+                        <li>Performance-based pricing</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">📝</div>
+                    <h3 class="service-title">Logic Log Framework</h3>
+                    <p class="service-description">Proprietary methodology for authenticating human thought processes and enabling transparent business partnerships.</p>
+                    <ul class="service-features">
+                        <li>Decision documentation</li>
+                        <li>Reasoning authentication</li>
+                        <li>IP creation process</li>
+                        <li>Transparency framework</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3 class="service-title">AI-Accelerated Development</h3>
+                    <p class="service-description">Traditional fractional teams enhanced with systematic transparency and AI-powered efficiency.</p>
+                    <ul class="service-features">
+                        <li>Rapid prototyping</li>
+                        <li>Quality assurance</li>
+                        <li>Scalable solutions</li>
+                        <li>Continuous optimization</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🎓</div>
+                    <h3 class="service-title">Authentication Training</h3>
+                    <p class="service-description">Methodology implementation for organizations requiring AI transparency and human oversight documentation.</p>
+                    <ul class="service-features">
+                        <li>Framework training</li>
+                        <li>Implementation support</li>
+                        <li>Certification programs</li>
+                        <li>Ongoing consultation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Target Markets Section -->
+        <section class="evolution-section" id="section-2">
+            <h2 class="services-title">Target Ecosystem</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">👔</div>
+                    <h3 class="service-title">Business Leaders</h3>
+                    <p class="service-description">CEOs, CTOs, and transformation leaders seeking partnership models with shared risk-reward and documented compliance.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3 class="service-title">Technical Founders</h3>
+                    <p class="service-description">Industry experts needing technical partnership to execute vision with documented strategic reasoning.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3 class="service-title">Professional Specialists</h3>
+                    <p class="service-description">Consultants, freelancers, and experienced professionals wanting to monetize expertise through shared success.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🌟</div>
+                    <h3 class="service-title">Global Contributors</h3>
+                    <p class="service-description">Anyone with specialized knowledge who can learn basic AI collaboration skills to participate in the Human 5.0 economy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="evolution-section cta-section" id="section-3">
+            <h2 class="cta-title">Join the Evolution</h2>
+            <p class="cta-description">
+                Ready to transform your business model and participate in the Human 5.0 revolution? Explore our comprehensive platform and discover how outcome-based partnerships can revolutionize your approach to business development.
+            </p>
+            <div class="cta-buttons">
+                <a href="neural-documentation-hub.html" class="neural-cta">
+                    <span>📚</span>
+                    Explore Documentation
+                </a>
+                <a href="roi-calculator-v5.html" class="neural-cta">
+                    <span>🧮</span>
+                    Calculate ROI
+                </a>
+                <a href="platform-infographic-v5.html" class="neural-cta">
+                    <span>🚀</span>
+                    Experience Platform
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const nodes = document.querySelectorAll('.consciousness-node');
+        const sections = document.querySelectorAll('.evolution-section');
+
+        // Intersection Observer for section tracking
+        const observerOptions = {
+            root: null,
+            rootMargin: '-50% 0px -50% 0px',
+            threshold: 0
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionIndex = Array.from(sections).indexOf(entry.target);
+                    updateActiveNode(sectionIndex);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Node click navigation
+        nodes.forEach((node, index) => {
+            node.addEventListener('click', () => {
+                const targetSection = document.getElementById(`section-${index}`);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+                updateActiveNode(index);
+            });
+        });
+
+        function updateActiveNode(index) {
+            nodes.forEach(node => node.classList.remove('active'));
+            nodes[index].classList.add('active');
+        }
+
+        // Enhanced animations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Stagger animation for cards
+            const cards = document.querySelectorAll('.value-card, .service-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150 + 1000);
+            });
+        });
+    </script>
+</body>
+</html>

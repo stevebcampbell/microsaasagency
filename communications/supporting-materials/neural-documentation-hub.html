@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human 5.0 Global Platform - Neural Documentation Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --glass-primary: #ffffff;
+            --glass-secondary: #fafbfc;
+            --glass-accent: #f5f7fa;
+            --glass-highlight: #ffffff;
+            --glass-blue: #0a84ff;
+            --glass-purple: #5e5ce6;
+            --glass-green: #32d74b;
+            --glass-orange: #ff9f0a;
+            --void-bg: linear-gradient(135deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            --glass-dark: #1d1d1f;
+            --glass-medium: #86868b;
+            --glass-light: #ffffff;
+            --glass-text: #1d1d1f;
+            --glass-text-secondary: rgba(29, 29, 31, 0.68);
+            --liquid-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 255, 0.8) 100%);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--void-bg);
+            color: var(--glass-text);
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* Liquid Glass Background System */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(10, 132, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(94, 92, 230, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(50, 215, 75, 0.06) 0%, transparent 40%),
+                linear-gradient(180deg, #ffffff 0%, #f8faff 50%, #f0f8ff 100%);
+            animation: liquidFlow 30s ease-in-out infinite alternate;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(rgba(10, 132, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(10, 132, 255, 0.02) 1px, transparent 1px);
+            background-size: 120px 120px;
+            animation: gridFloat 60s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes liquidFlow {
+            0% { filter: blur(0px) brightness(1.1); }
+            100% { filter: blur(2px) brightness(1.25); }
+        }
+
+        @keyframes gridFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+
+        /* Navigation System */
+        .neural-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            background: var(--liquid-gradient);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--glass-text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--glass-blue);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--glass-text);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Main Container */
+        .documentation-hub {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 80px 30px;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--glass-text) 0%, var(--glass-blue) 50%, var(--glass-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 4s ease-in-out infinite alternate;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1)); }
+            100% { filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2)); }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--glass-text-secondary);
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--glass-text-secondary);
+            opacity: 0.8;
+            max-width: 900px;
+            margin: 0 auto 50px;
+        }
+
+        /* Quick Access Tools */
+        .quick-tools {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 80px;
+        }
+
+        .tool-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 35px;
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--glass-text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .tool-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+
+        .tool-button:hover::before {
+            opacity: 1;
+        }
+
+        .tool-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Documentation Grid */
+        .docs-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .doc-category {
+            background: var(--liquid-gradient);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px) saturate(180%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+        }
+
+        .doc-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+
+        .doc-category:hover::before {
+            opacity: 1;
+        }
+
+        .doc-category:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.4);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 122, 255, 0.3);
+        }
+
+        .category-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--glass-text);
+            margin-bottom: 20px;
+        }
+
+        .category-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--glass-text-secondary);
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .doc-links {
+            list-style: none;
+        }
+
+        .doc-links li {
+            margin-bottom: 12px;
+        }
+
+        .doc-link {
+            color: var(--consciousness-light);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-radius: 8px;
+            padding-left: 15px;
+        }
+
+        .doc-link::before {
+            content: '⚡';
+            color: var(--bio-accent);
+            font-size: 1.1rem;
+        }
+
+        .doc-link:hover {
+            opacity: 1;
+            color: var(--neural-primary);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        /* Content Viewer */
+        .content-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 5, 0.95);
+            backdrop-filter: blur(30px);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .content-viewer.active {
+            display: block;
+        }
+
+        .viewer-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 5, 0.95) 0%, rgba(10, 10, 18, 0.98) 100%);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .viewer-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--neural-primary);
+            font-weight: 700;
+        }
+
+        .close-viewer {
+            background: none;
+            border: 2px solid var(--neural-primary);
+            color: var(--neural-primary);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .close-viewer:hover {
+            background: var(--neural-primary);
+            color: var(--void-bg);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .viewer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 30px;
+            line-height: 1.8;
+        }
+
+        .viewer-content h1,
+        .viewer-content h2,
+        .viewer-content h3 {
+            color: var(--neural-primary);
+            margin-bottom: 20px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .viewer-content p {
+            margin-bottom: 20px;
+            color: var(--consciousness-light);
+            opacity: 0.9;
+        }
+
+        .viewer-content ul,
+        .viewer-content ol {
+            margin-bottom: 20px;
+            padding-left: 30px;
+        }
+
+        .viewer-content li {
+            margin-bottom: 10px;
+            color: var(--consciousness-light);
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .documentation-hub {
+                padding-top: 140px;
+            }
+
+            .hero-section {
+                padding: 60px 20px;
+            }
+
+            .quick-tools {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .docs-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+                gap: 30px;
+            }
+
+            .doc-category {
+                padding: 30px 25px;
+            }
+
+            .viewer-content {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="neural-nav">
+        <div class="nav-content">
+            <div class="logo">Human 5.0 Platform</div>
+            <ul class="nav-links">
+                <li><a href="#overview" class="nav-link active">Overview</a></li>
+                <li><a href="#strategy" class="nav-link">Strategy</a></li>
+                <li><a href="#operations" class="nav-link">Operations</a></li>
+                <li><a href="#communications" class="nav-link">Communications</a></li>
+                <li><a href="#tools" class="nav-link">Tools</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="documentation-hub">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">Global Human-Authenticated AI Collaboration Platform</h1>
+            <p class="hero-subtitle">Revolutionizing Business Through Human 5.0 Evolution</p>
+            <p class="hero-description">
+                We transform traditional development services into intellectual property creation through our Human Co-Creator's Guiding Logic Log framework, addressing the growing trust crisis in AI-generated content while democratizing access to world-class development resources. Our outcome-based partnership model eliminates unfair hourly billing, sharing risk and reward to create true business partnerships.
+            </p>
+            
+            <!-- Quick Access Tools -->
+            <div class="quick-tools">
+                <a href="platform-infographic-v5.html" class="tool-button" target="_blank">
+                    <span>🧠</span>
+                    Neural Platform Interface
+                </a>
+                <a href="roi-calculator-v5.html" class="tool-button" target="_blank">
+                    <span>⚡</span>
+                    Neural ROI Calculator
+                </a>
+                <a href="neural-assets-showcase.html" class="tool-button" target="_blank">
+                    <span>🚀</span>
+                    Assets Showcase
+                </a>
+            </div>
+        </section>
+
+        <!-- Documentation Grid -->
+        <div class="docs-grid">
+            <!-- Strategy Documents -->
+            <div class="doc-category">
+                <div class="category-icon">🧠</div>
+                <h2 class="category-title">Strategic Framework</h2>
+                <p class="category-description">
+                    Core strategic documents defining the Human 5.0 platform, pricing models, and user ecosystem architecture.
+                </p>
+                <ul class="doc-links">
+                    <li><a href="#" class="doc-link" data-doc="../../docs/strategy/human-5.0-framework.md">Human 5.0 Framework</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../../docs/strategy/human-ai-collaboration-platform.md">AI Collaboration Platform</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../../docs/strategy/outcome-based-partnership-pricing.md">Partnership Pricing Model</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../../docs/strategy/user-personas-ecosystem.md">User Ecosystem & Personas</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../../docs/strategy/logic-log-framework.md">Logic Log Framework</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../../docs/strategy/master-logic-log.md">Master Decision Log</a></li>
+                </ul>
+            </div>
+
+            <!-- Operations Documents -->
+            <div class="doc-category">
+                <div class="category-icon">⚙️</div>
+                <h2 class="category-title">Operations & Implementation</h2>
+                <p class="category-description">
+                    Practical implementation guides, roadmaps, and operational frameworks for platform deployment.
+                </p>
+                <ul class="doc-links">
+                    <li><a href="#" class="doc-link" data-doc="../../docs/operations/implementation-roadmap.md">Implementation Roadmap</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../../docs/operations/implementation-guide.md">Implementation Guide</a></li>
+                </ul>
+            </div>
+
+            <!-- Financial Models -->
+            <div class="doc-category">
+                <div class="category-icon">💰</div>
+                <h2 class="category-title">Financial Models</h2>
+                <p class="category-description">
+                    Comprehensive financial planning, pricing strategies, and revenue projections for the platform.
+                </p>
+                <ul class="doc-links">
+                    <li><a href="#" class="doc-link" data-doc="../../docs/financial/financial-model.md">Financial Model</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../../docs/financial/pricing-strategy.md">Pricing Strategy</a></li>
+                </ul>
+            </div>
+
+            <!-- Communications Framework -->
+            <div class="doc-category">
+                <div class="category-icon">📡</div>
+                <h2 class="category-title">Communications System</h2>
+                <p class="category-description">
+                    Master communication framework with audience-specific versions and change management strategies.
+                </p>
+                <ul class="doc-links">
+                    <li><a href="#" class="doc-link" data-doc="../master-content/universal-platform-explanation.md">Universal Platform Explanation</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../change-management/adoption-strategy.md">Adoption Strategy</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../international/adaptation-framework.md">International Framework</a></li>
+                </ul>
+            </div>
+
+            <!-- Audience Communications -->
+            <div class="doc-category">
+                <div class="category-icon">👥</div>
+                <h2 class="category-title">Audience-Specific Communications</h2>
+                <p class="category-description">
+                    Tailored explanations and messaging for different user types and professional backgrounds.
+                </p>
+                <ul class="doc-links">
+                    <li><a href="#" class="doc-link" data-doc="../audience-versions/business-executives.md">Business Executives</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../audience-versions/entrepreneurs-startups.md">Entrepreneurs & Startups</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../audience-versions/mid-career-professionals.md">Mid-Career Professionals</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../audience-versions/retirees-experienced-professionals.md">Experienced Professionals</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../audience-versions/students-new-graduates.md">Students & New Graduates</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../audience-versions/freelancers-consultants.md">Freelancers & Consultants</a></li>
+                </ul>
+            </div>
+
+            <!-- Supporting Materials -->
+            <div class="doc-category">
+                <div class="category-icon">🎨</div>
+                <h2 class="category-title">Supporting Materials</h2>
+                <p class="category-description">
+                    Visual assets, interactive tools, and multimedia resources to enhance communication effectiveness.
+                </p>
+                <ul class="doc-links">
+                    <li><a href="#" class="doc-link" data-doc="../supporting-materials/framework-overview-v5.md">Neural Assets Framework</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../supporting-materials/platform-overview-infographic.md">Platform Infographic Specs</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../supporting-materials/roi-calculator-framework.md">ROI Calculator Framework</a></li>
+                    <li><a href="#" class="doc-link" data-doc="../implementation-tools/toolkit-overview.md">Implementation Toolkit</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Viewer Modal -->
+    <div class="content-viewer" id="contentViewer">
+        <div class="viewer-header">
+            <h2 class="viewer-title" id="viewerTitle">Document Title</h2>
+            <button class="close-viewer" onclick="closeViewer()">✕ Close</button>
+        </div>
+        <div class="viewer-content" id="viewerContent">
+            <!-- Content will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Document viewer functionality
+        let currentMarkdown = '';
+
+        document.querySelectorAll('.doc-link').forEach(link => {
+            link.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const docPath = link.getAttribute('data-doc');
+                const docTitle = link.textContent;
+                
+                try {
+                    const response = await fetch(docPath);
+                    if (response.ok) {
+                        const markdown = await response.text();
+                        showDocument(docTitle, markdown);
+                    } else {
+                        showDocument(docTitle, `# ${docTitle}\n\nThis document is being prepared. Please check back soon for the complete content.`);
+                    }
+                } catch (error) {
+                    showDocument(docTitle, `# ${docTitle}\n\nDocument temporarily unavailable. Please try again later.`);
+                }
+            });
+        });
+
+        function showDocument(title, markdown) {
+            document.getElementById('viewerTitle').textContent = title;
+            document.getElementById('viewerContent').innerHTML = convertMarkdownToHTML(markdown);
+            document.getElementById('contentViewer').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeViewer() {
+            document.getElementById('contentViewer').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Simple markdown to HTML converter
+        function convertMarkdownToHTML(markdown) {
+            let html = markdown
+                // Headers
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                // Bold
+                .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                // Italic
+                .replace(/\*(.*)\*/gim, '<em>$1</em>')
+                // Code
+                .replace(/`([^`]*)`/gim, '<code>$1</code>')
+                // Links
+                .replace(/\[([^\]]*)\]\(([^\)]*)\)/gim, '<a href="$2">$1</a>')
+                // Line breaks
+                .replace(/\n\n/gim, '</p><p>')
+                // Lists
+                .replace(/^\- (.*$)/gim, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>)/gims, '<ul>$1</ul>')
+                // Wrap in paragraphs
+                .replace(/^(?!<[hul])/gim, '<p>')
+                .replace(/(?<![>])$/gim, '</p>');
+
+            return html;
+        }
+
+        // Enhanced interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Stagger animation for doc categories
+            const categories = document.querySelectorAll('.doc-category');
+            categories.forEach((category, index) => {
+                category.style.opacity = '0';
+                category.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    category.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    category.style.opacity = '1';
+                    category.style.transform = 'translateY(0)';
+                }, index * 200 + 500);
+            });
+        });
+
+        // Close viewer with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeViewer();
+            }
+        });
+
+        // Prevent body scroll when viewer is open
+        document.getElementById('contentViewer').addEventListener('wheel', (e) => {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>

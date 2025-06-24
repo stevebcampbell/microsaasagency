@@ -803,7 +803,7 @@
                 <h1 class="hero-title-compact">Testing a Concept: The Knowledge Gig Economy Platform</h1>
                 <p class="hero-description-compact">
                     <strong>This is just an idea right now.</strong> We're exploring whether people want a platform for the emerging Knowledge Gig Economy—where AI handles the "how" and human experience becomes the ultimate differentiator.
-                    <br><br>In a world where "anyone can make anything," your unique knowledge, lived experience, and creative insights are the new currency. Does this resonate with you?
+                    <br><br>Current SaaS is built for enterprises, not individuals. What if there was a marketplace where you could get simple, human-crafted solutions for problems that don't need a $50/month subscription? Does this resonate with you?
                 </p>
                 <div class="hero-pillars">
                     <span class="pillar">🧠 Knowledge-First</span>
@@ -815,19 +815,19 @@
             <div class="hero-right">
                 <div class="signup-compact">
                     <h3>Which Resonates With You?</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-secondary);">Help us understand the Knowledge Gig Economy demand: <strong style="color: var(--text-primary);">(Select all that apply)</strong></p>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-secondary);">Help us understand who's underserved by current solutions: <strong style="color: var(--text-primary);">(Select all that apply)</strong></p>
                     <div class="signup-buttons">
-                        <button type="button" class="signup-btn resonance-btn" data-type="challenger">
-                            <span class="btn-icon">🎯</span>
-                            <span class="btn-text">I Have Complex Challenges</span>
+                        <button type="button" class="signup-btn resonance-btn" data-type="underserved">
+                            <span class="btn-icon">🔧</span>
+                            <span class="btn-text">SaaS is Too Complex/Expensive for My Needs</span>
                         </button>
                         <button type="button" class="signup-btn resonance-btn" data-type="expert">
                             <span class="btn-icon">🧠</span>
-                            <span class="btn-text">I Have Niche Expertise</span>
+                            <span class="btn-text">I Have Niche Expertise to Share</span>
                         </button>
                         <button type="button" class="signup-btn resonance-btn" data-type="seeker">
                             <span class="btn-icon">💡</span>
-                            <span class="btn-text">I Want Human-Verified Solutions</span>
+                            <span class="btn-text">I Need Human-Verified Solutions</span>
                         </button>
                     </div>
                     <div id="resonance-feedback" style="display: none; margin-top: 20px; padding: 15px; background: rgba(16, 255, 16, 0.1); border: 1px solid rgba(16, 255, 16, 0.3); border-radius: 8px; text-align: center;">
@@ -974,19 +974,19 @@
                                 <h4 style="color: var(--text-primary); margin-bottom: 10px; font-size: 1.1rem;">What resonates with you? <span style="color: var(--text-secondary); font-size: 0.9rem;">(Select all that apply)</span></h4>
                                 <div class="form-resonance-options">
                                     <label class="form-resonance-option">
-                                        <input type="checkbox" name="resonance_types" value="I Have Complex Challenges">
+                                        <input type="checkbox" name="resonance_types" value="SaaS is Too Complex/Expensive for My Needs">
                                         <span class="checkbox-custom"></span>
-                                        <span class="option-text">🎯 I Have Complex Challenges</span>
+                                        <span class="option-text">🔧 SaaS is Too Complex/Expensive for My Needs</span>
                                     </label>
                                     <label class="form-resonance-option">
-                                        <input type="checkbox" name="resonance_types" value="I Have Niche Expertise">
+                                        <input type="checkbox" name="resonance_types" value="I Have Niche Expertise to Share">
                                         <span class="checkbox-custom"></span>
-                                        <span class="option-text">🧠 I Have Niche Expertise</span>
+                                        <span class="option-text">🧠 I Have Niche Expertise to Share</span>
                                     </label>
                                     <label class="form-resonance-option">
-                                        <input type="checkbox" name="resonance_types" value="I Want Human-Verified Solutions">
+                                        <input type="checkbox" name="resonance_types" value="I Need Human-Verified Solutions">
                                         <span class="checkbox-custom"></span>
-                                        <span class="option-text">💡 I Want Human-Verified Solutions</span>
+                                        <span class="option-text">💡 I Need Human-Verified Solutions</span>
                                     </label>
                                 </div>
                                 <div id="form-selection-display" style="display: none; margin-top: 10px; padding: 10px; background: rgba(16, 255, 16, 0.1); border: 1px solid rgba(16, 255, 16, 0.3); border-radius: 8px; font-size: 0.9rem; color: #10ff10;"></div>
@@ -1035,9 +1035,9 @@
 
             // Mapping between button types and checkbox values
             const resonanceMapping = {
-                'challenger': 'I Have Complex Challenges',
-                'expert': 'I Have Niche Expertise', 
-                'seeker': 'I Want Human-Verified Solutions'
+                'underserved': 'SaaS is Too Complex/Expensive for My Needs',
+                'expert': 'I Have Niche Expertise to Share', 
+                'seeker': 'I Need Human-Verified Solutions'
             };
 
             function getSelectedTopButtons() {

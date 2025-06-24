@@ -260,7 +260,7 @@
 
         .content-card {
             background: linear-gradient(135deg, rgba(10, 132, 255, 0.15) 0%, rgba(94, 92, 230, 0.15) 100%);
-            border: 2px solid rgba(10, 132, 255, 0.3);
+            border: 2px solid rgba(10, 132, 255, 0.4);
             border-radius: 15px;
             padding: 25px 30px;
             transition: all 0.3s ease;
@@ -272,13 +272,14 @@
             justify-content: space-between;
             min-height: 120px;
             gap: 20px;
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.2);
         }
 
         .content-card:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-5px) scale(1.02);
             background: linear-gradient(135deg, rgba(10, 132, 255, 0.3) 0%, rgba(94, 92, 230, 0.3) 100%);
-            box-shadow: 0 15px 35px rgba(10, 132, 255, 0.3);
-            border-color: rgba(10, 132, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(10, 132, 255, 0.4);
+            border-color: rgba(10, 132, 255, 0.8);
         }
 
         .content-card-content {
@@ -304,8 +305,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            min-width: 140px;
+            gap: 8px;
+            min-width: 80px;
         }
 
         .content-card-icon {
@@ -319,43 +320,34 @@
             border-radius: 50%;
             font-size: 1.5rem;
             transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .content-card-icon::after {
+            content: "👆";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1rem;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
         }
 
         .content-card:hover .content-card-icon {
             background: rgba(10, 132, 255, 0.4);
             border-color: rgba(10, 132, 255, 0.8);
             transform: rotate(5deg) scale(1.1);
+            box-shadow: 0 0 20px rgba(10, 132, 255, 0.5);
         }
 
+        .content-card:hover .content-card-icon::after {
+            opacity: 1;
+            animation: none;
+        }
+
+        /* Remove the separate CTA element */
         .content-card-cta {
-            font-size: 1rem;
-            color: #ffffff;
-            font-weight: 700;
-            background: rgba(10, 132, 255, 0.3);
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 2px solid rgba(10, 132, 255, 0.6);
-            text-shadow: 0 0 10px rgba(10, 132, 255, 0.5);
-            transition: all 0.3s ease;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .content-card:hover .content-card-cta {
-            background: rgba(10, 132, 255, 0.5);
-            border-color: rgba(10, 132, 255, 0.8);
-            transform: scale(1.05);
-            text-shadow: 0 0 15px rgba(10, 132, 255, 0.8);
-        }
-
-        .content-card::before {
-            content: "👆";
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.2rem;
-            opacity: 0.6;
-            animation: bounce 2s infinite;
+            display: none;
         }
 
         @keyframes bounce {
@@ -786,7 +778,6 @@
                         </div>
                         <div class="content-card-right">
                             <div class="content-card-icon">💡</div>
-                            <div class="content-card-cta">Click to learn more →</div>
                         </div>
                     </div>
                     <div class="content-card" data-modal="micro-specialist">
@@ -796,7 +787,6 @@
                         </div>
                         <div class="content-card-right">
                             <div class="content-card-icon">🔗</div>
-                            <div class="content-card-cta">Click to learn more →</div>
                         </div>
                     </div>
                     <div class="content-card" data-modal="gig-economy">
@@ -806,7 +796,6 @@
                         </div>
                         <div class="content-card-right">
                             <div class="content-card-icon">💼</div>
-                            <div class="content-card-cta">Click to learn more →</div>
                         </div>
                     </div>
                     <div class="content-card" data-modal="authenticated-experience">
@@ -816,7 +805,6 @@
                         </div>
                         <div class="content-card-right">
                             <div class="content-card-icon">✅</div>
-                            <div class="content-card-cta">Click to learn more →</div>
                         </div>
                     </div>
                 </div>

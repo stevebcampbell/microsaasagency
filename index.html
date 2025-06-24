@@ -240,86 +240,61 @@
             opacity: 1;
         }
 
-        /* Auth Grid */
+        /* Auth Grid - Simple Text Layout */
         .auth-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .auth-card {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
+        .auth-item {
+            text-align: left;
         }
 
-        .auth-card:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .auth-icon {
-            font-size: 2rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .auth-card h4 {
-            margin-bottom: 10px;
+        .auth-item h4 {
             color: var(--text-primary);
-            font-weight: 600;
             font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .auth-card p {
+        .auth-item p {
             color: var(--text-secondary);
             font-size: 0.95rem;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
-        /* Marketplace */
+        /* Marketplace - Simple Text Layout */
         .marketplace-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
-        .marketplace-card {
-            background: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
+        .marketplace-item {
+            text-align: left;
         }
 
-        .marketplace-card:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .market-icon {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 15px;
-        }
-
-        .marketplace-card h4 {
-            margin-bottom: 10px;
+        .marketplace-item h4 {
             color: var(--text-primary);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .marketplace-card p {
+        .marketplace-item p {
             color: var(--text-secondary);
+            font-size: 0.95rem;
             line-height: 1.5;
         }
 
@@ -613,34 +588,28 @@
                 <h2 class="section-title">The Human Co-Creator's Logic Log</h2>
                 <p class="section-subtitle">In a world where AI can generate anything, authenticated human reasoning becomes the most valuable asset</p>
                 <div class="auth-grid">
-                    <div class="auth-card">
-                        <span class="auth-icon">🧠</span>
-                        <h4>Contextual Premise</h4>
+                    <div class="auth-item">
+                        <h4><span>🧠</span> Contextual Premise</h4>
                         <p>What situation prompted this solution?</p>
                     </div>
-                    <div class="auth-card">
-                        <span class="auth-icon">👥</span>
-                        <h4>Human Contributors</h4>
+                    <div class="auth-item">
+                        <h4><span>👥</span> Human Contributors</h4>
                         <p>Who shaped this solution?</p>
                     </div>
-                    <div class="auth-card">
-                        <span class="auth-icon">💡</span>
-                        <h4>Strategic Rationale</h4>
+                    <div class="auth-item">
+                        <h4><span>💡</span> Strategic Rationale</h4>
                         <p>Why this approach over others?</p>
                     </div>
-                    <div class="auth-card">
-                        <span class="auth-icon">🔄</span>
-                        <h4>Alternatives Considered</h4>
+                    <div class="auth-item">
+                        <h4><span>🔄</span> Alternatives Considered</h4>
                         <p>What other options were evaluated?</p>
                     </div>
-                    <div class="auth-card">
-                        <span class="auth-icon">📊</span>
-                        <h4>Success Criteria</h4>
+                    <div class="auth-item">
+                        <h4><span>📊</span> Success Criteria</h4>
                         <p>How do we measure success?</p>
                     </div>
-                    <div class="auth-card">
-                        <span class="auth-icon">🎯</span>
-                        <h4>Learning Outcomes</h4>
+                    <div class="auth-item">
+                        <h4><span>🎯</span> Learning Outcomes</h4>
                         <p>What insights were gained?</p>
                     </div>
                 </div>
@@ -651,24 +620,20 @@
                 <h2 class="section-title">The Knowledge Gig Marketplace</h2>
                 <p class="section-subtitle">An ecosystem where human experience meets AI capability—connecting micro-specialists with specific challenges</p>
                 <div class="marketplace-grid">
-                    <div class="marketplace-card">
-                        <span class="market-icon">🎯</span>
-                        <h4>Challenge Owners</h4>
+                    <div class="marketplace-item">
+                        <h4><span>🎯</span> Challenge Owners</h4>
                         <p>Post specific problems that require human insight, creativity, or lived experience to solve effectively.</p>
                     </div>
-                    <div class="marketplace-card">
-                        <span class="market-icon">🧠</span>
-                        <h4>Knowledge Specialists</h4>
+                    <div class="marketplace-item">
+                        <h4><span>🧠</span> Knowledge Specialists</h4>
                         <p>Monetize your unique expertise and experience through project-based gigs in your niche specialization.</p>
                     </div>
-                    <div class="marketplace-card">
-                        <span class="market-icon">🚀</span>
-                        <h4>Micro-SaaS Creators</h4>
+                    <div class="marketplace-item">
+                        <h4><span>🚀</span> Micro-SaaS Creators</h4>
                         <p>Turn domain expertise into digital products with AI-powered development and authenticated human insights.</p>
                     </div>
-                    <div class="marketplace-card">
-                        <span class="market-icon">🌟</span>
-                        <h4>Solution Seekers</h4>
+                    <div class="marketplace-item">
+                        <h4><span>🌟</span> Solution Seekers</h4>
                         <p>Access proven solutions backed by verified human experience and documented reasoning processes.</p>
                     </div>
                 </div>

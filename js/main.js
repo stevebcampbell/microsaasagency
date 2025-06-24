@@ -1,4 +1,4 @@
-// Main JavaScript for MicroSaaS Agency
+// Main JavaScript for Human-Authenticated AI Platform
 
 // Global variables
 let particleSystem = null;
@@ -11,7 +11,94 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollEffects();
     initializeInteractiveEffects();
     initializeQuickReference();
+    initializeEmailForms();
 });
+
+// Email Form Handling
+function initializeEmailForms() {
+    document.querySelectorAll('.email-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = this.querySelector('input[type="email"]').value;
+            const type = this.getAttribute('data-type');
+            
+            if (!email) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Simulate form submission (replace with actual API call)
+            handleEmailSignup(email, type);
+        });
+    });
+}
+
+function handleEmailSignup(email, type) {
+    // Show loading state
+    const submitButton = event.target.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Joining...';
+    submitButton.disabled = true;
+    
+    // Simulate API call (replace with actual implementation)
+    setTimeout(() => {
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        
+        // Clear form
+        event.target.querySelector('input[type="email"]').value = '';
+        
+        // Show success message
+        showNotification(`Welcome to the platform! Check your email for next steps.`, 'success');
+        
+        // Optional: Track the signup type
+        console.log(`New ${type} signup:`, email);
+    }, 1500);
+}
+
+function showNotification(message, type = 'success') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // Style the notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? 'rgba(50, 215, 75, 0.9)' : 'rgba(255, 69, 58, 0.9)'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 1px solid ${type === 'success' ? 'rgba(50, 215, 75, 0.3)' : 'rgba(255, 69, 58, 0.3)'};
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 5000);
+}
 
 // Particle System
 function initializeParticleSystem() {
@@ -88,20 +175,20 @@ function scrollToSection(sectionName) {
         case 'hero':
             targetElement = document.querySelector('.hero-section');
             break;
-        case 'services':
-            targetElement = document.getElementById('services');
+        case 'platform':
+            targetElement = document.getElementById('platform');
             break;
-        case 'portfolio':
-            targetElement = document.getElementById('portfolio');
+        case 'authentication':
+            targetElement = document.getElementById('authentication');
             break;
-        case 'team':
-            targetElement = document.getElementById('team');
+        case 'marketplace':
+            targetElement = document.getElementById('marketplace');
             break;
-        case 'contact':
-            targetElement = document.getElementById('contact');
+        case 'join':
+            targetElement = document.getElementById('join');
             break;
         default:
-            targetElement = document.querySelector('.hero-section');
+            targetElement = document.getElementById(sectionName);
     }
     
     if (targetElement) {
@@ -111,6 +198,11 @@ function scrollToSection(sectionName) {
         });
         updateActiveNavDot(sectionName);
     }
+}
+
+// Helper function for floating action button
+function scrollToJoin() {
+    scrollToSection('join');
 }
 
 function updateActiveNavDot(sectionName) {
@@ -343,8 +435,8 @@ function toggleQuickRef() {
     }
 }
 
-function scrollToContact() {
-    scrollToSection('contact');
+function scrollToJoin() {
+    scrollToSection('join');
 }
 
 // Utility Functions
@@ -429,7 +521,7 @@ if ('performance' in window) {
 // Export functions for global access
 window.MicroSaaSAgency = {
     toggleQuickRef,
-    scrollToContact,
+    scrollToJoin,
     scrollToSection,
     initializeParticleSystem
 };

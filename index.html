@@ -30,12 +30,12 @@
             font-family: 'Space Grotesk', sans-serif;
             background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
             color: var(--text-primary);
-            overflow: hidden;
-            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         .main-container {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -44,7 +44,7 @@
         /* Header */
         .main-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 20px 40px;
             background: rgba(255, 255, 255, 0.05);
@@ -60,30 +60,6 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .main-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-tab {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 10px 20px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-
-        .nav-tab.active,
-        .nav-tab:hover {
-            background: var(--glass-blue);
-            color: white;
-            transform: translateY(-2px);
         }
 
         /* Hero Section */
@@ -182,36 +158,34 @@
             font-size: 1.2rem;
         }
 
-        /* Content Area */
+        /* Content Area - Now flows as one page */
         .content-area {
-            position: absolute;
-            top: 100px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-
-        .content-area.active {
-            opacity: 1;
-            visibility: visible;
+            padding: 0 40px 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .content-section {
-            display: none;
-            height: 100%;
-            overflow-y: auto;
+            margin-bottom: 80px;
         }
 
-        .content-section.active {
-            display: block;
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 50px;
         }
 
         /* Section Grid */
@@ -219,7 +193,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            height: 100%;
+            margin-bottom: 20px;
         }
 
         .content-card {
@@ -267,23 +241,6 @@
         }
 
         /* Auth Grid */
-        .auth-intro {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .auth-intro h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-
-        .auth-intro p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
         .auth-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -326,23 +283,6 @@
         }
 
         /* Marketplace */
-        .marketplace-intro {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .marketplace-intro h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-
-        .marketplace-intro p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
         .marketplace-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -602,13 +542,7 @@
     <div class="main-container">
         <!-- Header Section -->
         <header class="main-header">
-            <div class="logo">Human-AI Platform</div>
-            <nav class="main-nav">
-                <button class="nav-tab active" data-section="platform">Platform</button>
-                <button class="nav-tab" data-section="authentication">Authentication</button>
-                <button class="nav-tab" data-section="marketplace">Marketplace</button>
-                <button class="nav-tab" data-section="join">Join</button>
-            </nav>
+            <div class="logo">Knowledge Gig Economy Platform</div>
         </header>
 
         <!-- Hero Section -->
@@ -648,10 +582,12 @@
             </div>
         </section>
 
-        <!-- Content Sections -->
-        <main class="content-area" id="contentArea">
+        <!-- All Content in One Flow -->
+        <main class="content-area">
             <!-- Platform Section -->
-            <section class="content-section active" data-section="platform">
+            <section class="content-section">
+                <h2 class="section-title">The Knowledge Gig Economy Platform</h2>
+                <p class="section-subtitle">Four core concepts that define the future of human-AI collaboration in the new economy</p>
                 <div class="section-grid">
                     <div class="content-card" data-modal="knowledge-currency">
                         <h3>🧠 Knowledge as Currency</h3>
@@ -673,11 +609,9 @@
             </section>
 
             <!-- Authentication Section -->
-            <section class="content-section" data-section="authentication">
-                <div class="auth-intro">
-                    <h2>The Human Co-Creator's Logic Log</h2>
-                    <p>In a world where AI can generate anything, we believe authenticated human reasoning will become the most valuable asset.</p>
-                </div>
+            <section class="content-section">
+                <h2 class="section-title">The Human Co-Creator's Logic Log</h2>
+                <p class="section-subtitle">In a world where AI can generate anything, authenticated human reasoning becomes the most valuable asset</p>
                 <div class="auth-grid">
                     <div class="auth-card">
                         <span class="auth-icon">🧠</span>
@@ -713,11 +647,9 @@
             </section>
 
             <!-- Marketplace Section -->
-            <section class="content-section" data-section="marketplace">
-                <div class="marketplace-intro">
-                    <h2>The Knowledge Gig Marketplace</h2>
-                    <p>We're building an ecosystem where human experience meets AI capability—connecting micro-specialists with specific challenges in the new economy.</p>
-                </div>
+            <section class="content-section">
+                <h2 class="section-title">The Knowledge Gig Marketplace</h2>
+                <p class="section-subtitle">An ecosystem where human experience meets AI capability—connecting micro-specialists with specific challenges</p>
                 <div class="marketplace-grid">
                     <div class="marketplace-card">
                         <span class="market-icon">🎯</span>
@@ -743,11 +675,11 @@
             </section>
 
             <!-- Join Section -->
-            <section class="content-section" data-section="join">
+            <section class="content-section">
+                <h2 class="section-title">Be a Founding Member</h2>
+                <p class="section-subtitle">We're building something revolutionary. Help us create the future of the Knowledge Gig Economy</p>
                 <div class="join-grid">
                     <div class="join-left">
-                        <h2>Be a Founding Member</h2>
-                        <p>We're building something revolutionary. Whether you have challenges to solve, expertise to share, or solutions to find, help us create the future.</p>
                         <div class="benefits-list">
                             <div class="benefit-item">
                                 <span class="benefit-icon">🎯</span>
@@ -785,32 +717,11 @@
     </div>
 
     <script>
-        // Tab switching functionality
+        // Simplified functionality for single page
         document.addEventListener('DOMContentLoaded', function() {
-            const navTabs = document.querySelectorAll('.nav-tab');
             const signupBtns = document.querySelectorAll('.signup-btn');
-            const contentArea = document.getElementById('contentArea');
-            const contentSections = document.querySelectorAll('.content-section');
             const modal = document.getElementById('modal');
             const modalClose = document.querySelector('.modal-close');
-
-            // Handle nav tab clicks
-            navTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const section = this.getAttribute('data-section');
-                    
-                    // Update active tab
-                    navTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show content area
-                    contentArea.classList.add('active');
-                    
-                    // Update active section
-                    contentSections.forEach(s => s.classList.remove('active'));
-                    document.querySelector(`[data-section="${section}"].content-section`).classList.add('active');
-                });
-            });
 
             // Handle signup button clicks
             signupBtns.forEach(btn => {
@@ -827,15 +738,6 @@
                 const email = this.querySelector('input[type="email"]').value;
                 alert(`Thanks for joining! We'll send updates to ${email}`);
                 this.reset();
-            });
-
-            // Close content area when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!contentArea.contains(e.target) && !e.target.classList.contains('nav-tab')) {
-                    contentArea.classList.remove('active');
-                    navTabs.forEach(t => t.classList.remove('active'));
-                    navTabs[0].classList.add('active'); // Reset to first tab
-                }
             });
 
             // Modal data

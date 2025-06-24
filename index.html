@@ -574,8 +574,8 @@
                         </button>
                     </div>
                     <div id="resonance-feedback" style="display: none; margin-top: 20px; padding: 15px; background: rgba(16, 255, 16, 0.1); border: 1px solid rgba(16, 255, 16, 0.3); border-radius: 8px; text-align: center;">
-                        <p style="color: #10ff10; margin: 0;">✅ <strong>Thanks! Your preference has been saved.</strong></p>
-                        <p style="color: var(--text-secondary); margin: 8px 0 0 0; font-size: 0.9rem;">Keep scrolling to share your email and tell us more →</p>
+                        <p style="color: #10ff10; margin: 0;">✅ <strong>Saved to your browser storage!</strong></p>
+                        <p style="color: var(--text-secondary); margin: 8px 0 0 0; font-size: 0.9rem;">When you register interest, this will be part of the email subject line →</p>
                     </div>
                 </div>
             </div>
@@ -727,6 +727,27 @@
             const resonanceButtons = document.querySelectorAll('.resonance-btn');
             const resonanceFeedback = document.getElementById('resonance-feedback');
             const formResonanceField = document.getElementById('form_resonance_type');
+            const formSubjectField = document.querySelector('input[name="_subject"]');
+
+            function updateFormWithResonance(resonanceType) {
+                const resonanceLabels = {
+                    'challenger': 'I Have Complex Challenges',
+                    'expert': 'I Have Niche Expertise', 
+                    'seeker': 'I Want Human-Verified Solutions'
+                };
+                
+                const resonanceLabel = resonanceLabels[resonanceType] || resonanceType;
+                
+                // Update the hidden form field for form data
+                if (formResonanceField) {
+                    formResonanceField.value = resonanceLabel;
+                }
+                
+                // Update the email subject line to include resonance
+                if (formSubjectField) {
+                    formSubjectField.value = `Knowledge Gig Platform Interest - ${resonanceLabel}`;
+                }
+            }
 
             resonanceButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -735,15 +756,8 @@
                     // Save to session storage
                     sessionStorage.setItem('resonanceType', resonanceType);
                     
-                    // Update the hidden form field
-                    if (formResonanceField) {
-                        const resonanceLabels = {
-                            'challenger': 'I Have Complex Challenges',
-                            'expert': 'I Have Niche Expertise', 
-                            'seeker': 'I Want Human-Verified Solutions'
-                        };
-                        formResonanceField.value = resonanceLabels[resonanceType] || resonanceType;
-                    }
+                    // Update form fields including subject line
+                    updateFormWithResonance(resonanceType);
                     
                     // Visual feedback
                     resonanceButtons.forEach(btn => btn.classList.remove('selected'));
@@ -764,13 +778,9 @@
 
             // Load saved resonance on page load
             const savedResonance = sessionStorage.getItem('resonanceType');
-            if (savedResonance && formResonanceField) {
-                const resonanceLabels = {
-                    'challenger': 'I Have Complex Challenges',
-                    'expert': 'I Have Niche Expertise', 
-                    'seeker': 'I Want Human-Verified Solutions'
-                };
-                formResonanceField.value = resonanceLabels[savedResonance] || savedResonance;
+            if (savedResonance) {
+                // Update form fields with saved resonance
+                updateFormWithResonance(savedResonance);
                 
                 // Highlight the selected button
                 const selectedButton = document.querySelector(`[data-type="${savedResonance}"]`);

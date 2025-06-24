@@ -832,7 +832,7 @@
                     </div>
                     <div id="resonance-feedback" style="display: none; margin-top: 20px; padding: 15px; background: rgba(16, 255, 16, 0.1); border: 1px solid rgba(16, 255, 16, 0.3); border-radius: 8px; text-align: center;">
                         <p style="color: #10ff10; margin: 0;" id="feedback-message">✅ <strong>Selections saved to browser storage!</strong></p>
-                        <p style="color: var(--text-secondary); margin: 8px 0 0 0; font-size: 0.9rem;">When you register interest, these will be part of the email subject line →</p>
+                        <p style="color: var(--text-secondary); margin: 8px 0 0 0; font-size: 0.9rem;">👇 Explore the platform concepts below to learn more!</p>
                     </div>
                 </div>
             </div>
@@ -1124,15 +1124,19 @@
                     updateTopButtonFeedback();
                     syncFormToTopButtons();
                     
-                    // Scroll to form if any selection is made
+                    // Encourage exploration instead of auto-scrolling
                     const selectedCount = getSelectedTopButtons().length;
-                    if (selectedCount > 0) {
+                    if (selectedCount === 1) {
+                        // Show encouragement message for first selection
                         setTimeout(() => {
-                            const joinSection = document.querySelector('.join-early');
-                            if (joinSection) {
-                                joinSection.scrollIntoView({ behavior: 'smooth' });
+                            const feedbackDiv = document.getElementById('resonance-feedback');
+                            if (feedbackDiv) {
+                                const encourageText = feedbackDiv.querySelector('p:last-child');
+                                if (encourageText) {
+                                    encourageText.innerHTML = '👇 <strong>Explore the concepts below to learn more, then join the collaboration at the bottom!</strong>';
+                                }
                             }
-                        }, 1500);
+                        }, 1000);
                     }
                 });
             });

@@ -10,12 +10,14 @@
         :root {
             --bg-primary: #0a0e1a;
             --bg-secondary: #1a1f2e;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.3);
             --glass-blue: #0a84ff;
             --glass-purple: #5e5ce6;
             --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-secondary: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.12);
+            --card-border: rgba(255, 255, 255, 0.25);
         }
 
         * {
@@ -55,6 +57,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--glass-blue), var(--glass-purple));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -220,22 +223,47 @@
         }
 
         .content-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             border-radius: 15px;
             padding: 25px;
             transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            backdrop-filter: blur(15px);
         }
 
         .content-card:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .content-card h3 {
             font-size: 1.3rem;
             margin-bottom: 15px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .content-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .content-card::after {
+            content: "Click to learn more →";
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.8rem;
             color: var(--glass-blue);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .content-card:hover::after {
+            opacity: 1;
         }
 
         /* Auth Grid */
@@ -418,6 +446,81 @@
             text-decoration: none;
         }
 
+        /* Modal System */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal h2 {
+            color: var(--glass-blue);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .modal h3 {
+            color: var(--text-primary);
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+
+        .modal p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .modal ul {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal li {
+            margin-bottom: 8px;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .hero-compact {
@@ -481,10 +584,10 @@
         <!-- Hero Section -->
         <section class="hero-compact">
             <div class="hero-left">
-                <h1 class="hero-title-compact">Where Human Expertise Meets AI Innovation</h1>
+                <h1 class="hero-title-compact">Testing a Concept: Human Expertise Meets AI Innovation</h1>
                 <p class="hero-description-compact">
-                    We're building the creator-to-creator platform where people with challenges connect with people who have expertise. 
-                    Everyone succeeds when solutions work—we share in outcomes, not just effort.
+                    <strong>This is just an idea right now.</strong> We're exploring whether people would want a creator-to-creator platform where those with challenges connect with those who have expertise. 
+                    <br><br>Does this resonate with you? Click around, explore the concept, and let us know what you think.
                 </p>
                 <div class="hero-pillars">
                     <span class="pillar">🧠 Human-First</span>
@@ -495,19 +598,20 @@
             </div>
             <div class="hero-right">
                 <div class="signup-compact">
-                    <h3>Help Us Build This</h3>
+                    <h3>Does This Resonate?</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-secondary);">Tell us which perspective interests you most:</p>
                     <div class="signup-buttons">
                         <button class="signup-btn" data-type="challenger">
                             <span class="btn-icon">🚀</span>
-                            <span class="btn-text">I Have a Challenge</span>
+                            <span class="btn-text">I Have Challenges to Solve</span>
                         </button>
                         <button class="signup-btn" data-type="expert">
                             <span class="btn-icon">🧠</span>
-                            <span class="btn-text">I Have Expertise</span>
+                            <span class="btn-text">I Have Expertise to Share</span>
                         </button>
                         <button class="signup-btn" data-type="seeker">
                             <span class="btn-icon">🎯</span>
-                            <span class="btn-text">I Seek Solutions</span>
+                            <span class="btn-text">I Seek Better Solutions</span>
                         </button>
                     </div>
                 </div>
@@ -519,19 +623,19 @@
             <!-- Platform Section -->
             <section class="content-section active" data-section="platform">
                 <div class="section-grid">
-                    <div class="content-card">
+                    <div class="content-card" data-modal="authenticated-rationale">
                         <h3>🔐 Authenticated Human Rationale</h3>
                         <p>Every solution comes with complete documentation of the human reasoning and decision-making process.</p>
                     </div>
-                    <div class="content-card">
+                    <div class="content-card" data-modal="creator-network">
                         <h3>🤝 Creator-to-Creator Network</h3>
                         <p>Direct connections between people who have challenges and people who have expertise in our global ecosystem.</p>
                     </div>
-                    <div class="content-card">
+                    <div class="content-card" data-modal="ai-amplified">
                         <h3>⚡ AI-Amplified Expertise</h3>
                         <p>Human creativity enhanced by AI tools, creating solutions faster and more effectively.</p>
                     </div>
-                    <div class="content-card">
+                    <div class="content-card" data-modal="outcome-based">
                         <h3>🎯 Outcome-Based Success</h3>
                         <p>Everyone succeeds when solutions actually work. Share in success, not just effort.</p>
                     </div>
@@ -657,6 +761,8 @@
             const signupBtns = document.querySelectorAll('.signup-btn');
             const contentArea = document.getElementById('contentArea');
             const contentSections = document.querySelectorAll('.content-section');
+            const modal = document.getElementById('modal');
+            const modalClose = document.querySelector('.modal-close');
 
             // Handle nav tab clicks
             navTabs.forEach(tab => {
@@ -701,7 +807,155 @@
                     navTabs[0].classList.add('active'); // Reset to first tab
                 }
             });
+
+            // Modal data
+            const modalData = {
+                'authenticated-rationale': {
+                    title: '🔐 Authenticated Human Rationale',
+                    content: `
+                        <h3>The Problem</h3>
+                        <p>In an AI-saturated world, how do you know what solutions were actually created by humans vs generated by AI? How do you trust the reasoning behind a solution?</p>
+                        
+                        <h3>Our Concept</h3>
+                        <p>Every solution on our platform would come with a complete "Logic Log" - documented human reasoning that shows:</p>
+                        <ul>
+                            <li>What problem prompted this solution</li>
+                            <li>Who contributed to the thinking process</li>
+                            <li>Why this approach was chosen over alternatives</li>
+                            <li>What assumptions were made</li>
+                            <li>How success would be measured</li>
+                        </ul>
+                        
+                        <h3>Why This Matters</h3>
+                        <p>When you can trace the human logic behind a solution, you can:</p>
+                        <ul>
+                            <li>Trust the reasoning process</li>
+                            <li>Adapt it to your specific situation</li>
+                            <li>Learn from the thought process</li>
+                            <li>Build on authenticated human insights</li>
+                        </ul>
+                    `
+                },
+                'creator-network': {
+                    title: '🤝 Creator-to-Creator Network',
+                    content: `
+                        <h3>The Vision</h3>
+                        <p>A global network connecting two types of people:</p>
+                        <ul>
+                            <li><strong>Challenge Owners:</strong> People with specific problems to solve</li>
+                            <li><strong>Expertise Holders:</strong> People with relevant knowledge and experience</li>
+                        </ul>
+                        
+                        <h3>How It Would Work</h3>
+                        <p>Unlike traditional freelancing or consulting platforms, this would focus on:</p>
+                        <ul>
+                            <li>Problem-solution matching based on expertise</li>
+                            <li>Collaborative problem-solving sessions</li>
+                            <li>Shared success outcomes vs hourly billing</li>
+                            <li>Building lasting professional relationships</li>
+                        </ul>
+                        
+                        <h3>The Difference</h3>
+                        <p>Most platforms connect people to jobs. We want to connect people to people - creating relationships that benefit everyone involved.</p>
+                    `
+                },
+                'ai-amplified': {
+                    title: '⚡ AI-Amplified Expertise',
+                    content: `
+                        <h3>Human + AI Collaboration</h3>
+                        <p>The goal isn't replacing humans with AI, but amplifying human expertise with AI tools.</p>
+                        
+                        <h3>How This Could Work</h3>
+                        <ul>
+                            <li><strong>Research Acceleration:</strong> AI helps gather relevant information quickly</li>
+                            <li><strong>Pattern Recognition:</strong> AI identifies patterns humans might miss</li>
+                            <li><strong>Solution Testing:</strong> AI helps model and test potential solutions</li>
+                            <li><strong>Documentation:</strong> AI helps document the human reasoning process</li>
+                        </ul>
+                        
+                        <h3>The Human Element</h3>
+                        <p>Humans provide:</p>
+                        <ul>
+                            <li>Contextual understanding</li>
+                            <li>Creative problem-solving</li>
+                            <li>Ethical judgment</li>
+                            <li>Relationship building</li>
+                            <li>Strategic thinking</li>
+                        </ul>
+                        
+                        <p>AI amplifies these human strengths rather than replacing them.</p>
+                    `
+                },
+                'outcome-based': {
+                    title: '🎯 Outcome-Based Success',
+                    content: `
+                        <h3>Beyond Hourly Billing</h3>
+                        <p>What if success was measured by results, not time spent?</p>
+                        
+                        <h3>The Concept</h3>
+                        <ul>
+                            <li><strong>Shared Success:</strong> Everyone benefits when solutions actually work</li>
+                            <li><strong>Result-Focused:</strong> Payment tied to achieving specific outcomes</li>
+                            <li><strong>Long-term Thinking:</strong> Incentives aligned with solution effectiveness</li>
+                            <li><strong>Collaborative Risk:</strong> Both parties invested in success</li>
+                        </ul>
+                        
+                        <h3>How This Might Work</h3>
+                        <p>Example scenarios:</p>
+                        <ul>
+                            <li>Business problem: Share in revenue improvement</li>
+                            <li>Technical challenge: Success fee when solution works</li>
+                            <li>Creative project: Bonus based on project impact</li>
+                            <li>Learning goal: Payment tied to skill acquisition</li>
+                        </ul>
+                        
+                        <h3>Why This Matters</h3>
+                        <p>Creates alignment between what you want (results) and what experts provide (solutions that actually work).</p>
+                    `
+                }
+            };
+
+            // Modal functionality
+            document.querySelectorAll('.content-card[data-modal]').forEach(card => {
+                card.addEventListener('click', function() {
+                    const modalType = this.getAttribute('data-modal');
+                    const data = modalData[modalType];
+                    if (data) {
+                        openModal(data.title, data.content);
+                    }
+                });
+            });
+
+            function openModal(title, content) {
+                const modalTitle = modal.querySelector('h2');
+                const modalContent = modal.querySelector('.modal-body');
+                modalTitle.innerHTML = title;
+                modalContent.innerHTML = content;
+                modal.classList.add('active');
+            }
+
+            modalClose.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+
+            // Close modal when clicking outside of it
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
         });
     </script>
+
+    <!-- Modal HTML -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Modal Title</h2>
+            <div class="modal-body">
+                <p>Content will be loaded here...</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

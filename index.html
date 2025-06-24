@@ -149,9 +149,19 @@
         }
 
         .signup-btn:hover {
-            background: var(--glass-blue);
+            background: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 100%);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(10, 132, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(10, 132, 255, 0.3);
+        }
+
+        .signup-btn.selected {
+            background: linear-gradient(135deg, #10ff10 0%, #00cc00 100%);
+            border-color: rgba(16, 255, 16, 0.5);
+            box-shadow: 0 6px 20px rgba(16, 255, 16, 0.3);
+        }
+
+        .signup-btn.selected:hover {
+            background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
         }
 
         .btn-icon {
@@ -550,27 +560,22 @@
                     <h3>Which Resonates With You?</h3>
                     <p style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-secondary);">Help us understand the Knowledge Gig Economy demand:</p>
                     <div class="signup-buttons">
-                        <form action="https://formspree.io/f/mpwryezb" method="POST" style="display: contents;">
-                            <button type="submit" class="signup-btn" name="user_type" value="challenger">
-                                <span class="btn-icon">🎯</span>
-                                <span class="btn-text">I Have Complex Challenges</span>
-                            </button>
-                            <input type="hidden" name="_subject" value="Complex Challenges Interest - Knowledge Gig Platform">
-                        </form>
-                        <form action="https://formspree.io/f/mpwryezb" method="POST" style="display: contents;">
-                            <button type="submit" class="signup-btn" name="user_type" value="expert">
-                                <span class="btn-icon">🧠</span>
-                                <span class="btn-text">I Have Niche Expertise</span>
-                            </button>
-                            <input type="hidden" name="_subject" value="Niche Expertise Interest - Knowledge Gig Platform">
-                        </form>
-                        <form action="https://formspree.io/f/mpwryezb" method="POST" style="display: contents;">
-                            <button type="submit" class="signup-btn" name="user_type" value="seeker">
-                                <span class="btn-icon">💡</span>
-                                <span class="btn-text">I Want Human-Verified Solutions</span>
-                            </button>
-                            <input type="hidden" name="_subject" value="Solution Seeker Interest - Knowledge Gig Platform">
-                        </form>
+                        <button type="button" class="signup-btn resonance-btn" data-type="challenger">
+                            <span class="btn-icon">🎯</span>
+                            <span class="btn-text">I Have Complex Challenges</span>
+                        </button>
+                        <button type="button" class="signup-btn resonance-btn" data-type="expert">
+                            <span class="btn-icon">🧠</span>
+                            <span class="btn-text">I Have Niche Expertise</span>
+                        </button>
+                        <button type="button" class="signup-btn resonance-btn" data-type="seeker">
+                            <span class="btn-icon">💡</span>
+                            <span class="btn-text">I Want Human-Verified Solutions</span>
+                        </button>
+                    </div>
+                    <div id="resonance-feedback" style="display: none; margin-top: 20px; padding: 15px; background: rgba(16, 255, 16, 0.1); border: 1px solid rgba(16, 255, 16, 0.3); border-radius: 8px; text-align: center;">
+                        <p style="color: #10ff10; margin: 0;">✅ <strong>Thanks! Your preference has been saved.</strong></p>
+                        <p style="color: var(--text-secondary); margin: 8px 0 0 0; font-size: 0.9rem;">Keep scrolling to share your email and tell us more →</p>
                     </div>
                 </div>
             </div>
@@ -688,6 +693,8 @@
                             <h3>Join the Vision</h3>
                             <form class="compact-email-form" action="https://formspree.io/f/mpwryezb" method="POST">
                                 <input type="email" name="email" placeholder="Enter your email" required>
+                                <textarea name="thoughts" placeholder="What interests you most about this concept? Any specific challenges or expertise you'd like to share?" rows="3" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-family: inherit; margin: 10px 0; resize: vertical;"></textarea>
+                                <input type="hidden" name="resonance_type" id="form_resonance_type" value="">
                                 <input type="hidden" name="_subject" value="New Knowledge Gig Economy Platform Interest">
                                 <input type="hidden" name="_next" value="https://stevebcampbell.github.io/microsaasagency/?thanks=1">
                                 <button type="submit" class="submit-btn">Count Me In</button>
@@ -703,7 +710,7 @@
     </div>
 
     <script>
-        // Simplified functionality for single page
+        // Enhanced functionality for resonance tracking and email collection
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('modal');
             const modalClose = document.querySelector('.modal-close');
@@ -714,6 +721,63 @@
                 alert('Thanks for joining! We\'ll be in touch soon.');
                 // Remove the parameter from URL
                 window.history.replaceState({}, document.title, window.location.pathname);
+            }
+
+            // Resonance button functionality
+            const resonanceButtons = document.querySelectorAll('.resonance-btn');
+            const resonanceFeedback = document.getElementById('resonance-feedback');
+            const formResonanceField = document.getElementById('form_resonance_type');
+
+            resonanceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const resonanceType = this.getAttribute('data-type');
+                    
+                    // Save to session storage
+                    sessionStorage.setItem('resonanceType', resonanceType);
+                    
+                    // Update the hidden form field
+                    if (formResonanceField) {
+                        const resonanceLabels = {
+                            'challenger': 'I Have Complex Challenges',
+                            'expert': 'I Have Niche Expertise', 
+                            'seeker': 'I Want Human-Verified Solutions'
+                        };
+                        formResonanceField.value = resonanceLabels[resonanceType] || resonanceType;
+                    }
+                    
+                    // Visual feedback
+                    resonanceButtons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    // Show success message
+                    resonanceFeedback.style.display = 'block';
+                    
+                    // Smooth scroll to forms section after a brief delay
+                    setTimeout(() => {
+                        const joinSection = document.querySelector('.join-early');
+                        if (joinSection) {
+                            joinSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 1500);
+                });
+            });
+
+            // Load saved resonance on page load
+            const savedResonance = sessionStorage.getItem('resonanceType');
+            if (savedResonance && formResonanceField) {
+                const resonanceLabels = {
+                    'challenger': 'I Have Complex Challenges',
+                    'expert': 'I Have Niche Expertise', 
+                    'seeker': 'I Want Human-Verified Solutions'
+                };
+                formResonanceField.value = resonanceLabels[savedResonance] || savedResonance;
+                
+                // Highlight the selected button
+                const selectedButton = document.querySelector(`[data-type="${savedResonance}"]`);
+                if (selectedButton) {
+                    selectedButton.classList.add('selected');
+                    resonanceFeedback.style.display = 'block';
+                }
             }
 
             // Modal data
